@@ -1,12 +1,188 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="dev.patika.plus.gui.HotelAddAndEditGui">
-  <grid id="27dc6" binding="wrapper" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+  <grid id="27dc6" binding="wrapper" layout-manager="GridLayoutManager" row-count="10" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="663" height="649"/>
     </constraints>
     <properties/>
     <border type="none"/>
-    <children/>
+    <children>
+      <grid id="a3027" binding="basicInfoPanel" layout-manager="GridLayoutManager" row-count="8" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="0" column="0" row-span="7" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="f3dd0" class="javax.swing.JLabel" binding="nameLabel">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="e8c40"/>
+              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.hotel.add-and-edit.label-1"/>
+            </properties>
+          </component>
+          <component id="e8c40" class="javax.swing.JTextField" binding="nameTextField">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="7118e" class="javax.swing.JLabel" binding="provinceLabel">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="747c"/>
+              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.hotel.add-and-edit.label-2"/>
+            </properties>
+          </component>
+          <component id="747c" class="javax.swing.JTextField" binding="provinceTextField">
+            <constraints>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="a6e16" class="javax.swing.JLabel" binding="stateLabel">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="bd8bb"/>
+              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.hotel.add-and-edit.label-3"/>
+            </properties>
+          </component>
+          <component id="bd8bb" class="javax.swing.JTextField" binding="stateTextField">
+            <constraints>
+              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="916f8" class="javax.swing.JLabel" binding="addressLabel">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="53382"/>
+              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.hotel.add-and-edit.label-4"/>
+            </properties>
+          </component>
+          <component id="53382" class="javax.swing.JTextField" binding="addressTextField">
+            <constraints>
+              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="ff92" class="javax.swing.JLabel" binding="emailLabel">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="302d5"/>
+              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.hotel.add-and-edit.label-5"/>
+            </properties>
+          </component>
+          <component id="302d5" class="javax.swing.JTextField" binding="emailTextField">
+            <constraints>
+              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="371d4" class="javax.swing.JLabel" binding="phoneNumberLabel">
+            <constraints>
+              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <labelFor value="edb81"/>
+              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.hotel.add-and-edit.label-6"/>
+            </properties>
+          </component>
+          <component id="edb81" class="javax.swing.JTextField" binding="phoneNumberTextField">
+            <constraints>
+              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="b8a50" class="javax.swing.JLabel" binding="starsLabel">
+            <constraints>
+              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.hotel.add-and-edit.label-7"/>
+            </properties>
+          </component>
+          <component id="ad44e" class="javax.swing.JSlider" binding="starsSlider">
+            <constraints>
+              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <maximum value="5"/>
+              <minimum value="1"/>
+              <paintLabels value="false"/>
+              <value value="3"/>
+              <valueIsAdjusting value="false"/>
+            </properties>
+          </component>
+          <component id="d49b4" class="javax.swing.JLabel" binding="basicInfoLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <enabled value="true"/>
+              <horizontalAlignment value="10"/>
+              <horizontalTextPosition value="11"/>
+              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.hotel.add-and-edit.panel-label-1"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="a48be" binding="currentDetailsPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="7" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="37ff4" class="javax.swing.JLabel" binding="currentDetailsLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.hotel.add-and-edit.panel.label-2"/>
+            </properties>
+          </component>
+          <grid id="f241e" binding="facilitiesPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children/>
+          </grid>
+        </children>
+      </grid>
+      <vspacer id="ef7cc">
+        <constraints>
+          <grid row="8" column="0" row-span="2" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+    </children>
   </grid>
 </form>
