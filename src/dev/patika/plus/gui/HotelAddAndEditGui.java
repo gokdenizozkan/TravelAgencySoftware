@@ -23,6 +23,32 @@ public class HotelAddAndEditGui {
     private JPanel currentDetailsPanel;
     private JLabel currentDetailsLabel;
     private JPanel facilitiesPanel;
+    private JCheckBox facility0CheckBox;
+    private JCheckBox facility1CheckBox;
+    private JCheckBox facility2CheckBox;
+    private JCheckBox facility3CheckBox;
+    private JCheckBox facility4CheckBox;
+    private JCheckBox facility5CheckBox;
+    private JCheckBox facility6CheckBox;
+    private JLabel facilitiesLabel;
+    private JPanel boardTypesPanel;
+    private JCheckBox boardType0CheckBox;
+    private JCheckBox boardType1CheckBox;
+    private JCheckBox boardType2CheckBox;
+    private JCheckBox boardType3CheckBox;
+    private JCheckBox boardType4CheckBox;
+    private JCheckBox boardType5CheckBox;
+    private JCheckBox boardType6CheckBox;
+    private JLabel boardTypesLabel;
+    private JPanel roomsPanel;
+    private JCheckBox singleRoomCheckBox;
+    private JCheckBox doubleRoomCheckBox;
+    private JCheckBox suiteRoomCheckBox;
+    private JSpinner singleRoomSpinner;
+    private JLabel roomsLabel;
+    private JSpinner doubleRoomSpinner;
+    private JSpinner suiteRoomSpinner;
+    private JButton submitButton;
 
     public HotelAddAndEditGui() {
         // TODO add hotel
