@@ -13,7 +13,7 @@ public class Hotel {
     private String phoneNumber;
     private int stars;
     private String facilities;
-    private String accommodations;
+    private String boardTypes;
     private String allRooms; // roomId, amountOfRoom; represents total rooms, excluding availability
     private String availableRooms; // roomId, amountOfRoom; represents total rooms, excluding availability
 
@@ -28,7 +28,7 @@ public class Hotel {
             this.phoneNumber = resultSet.getString("phone_number");
             this.stars = resultSet.getInt("stars");
             this.facilities = resultSet.getString("facilities");
-            this.accommodations = resultSet.getString("accommodations");
+            this.boardTypes = resultSet.getString("board_types");
             this.allRooms = resultSet.getString("all_rooms");
             this.allRooms = resultSet.getString("available_rooms");
         } catch (SQLException exception) {
