@@ -32,7 +32,10 @@ public class ManagementGui extends JFrame {
         setTitle("Management Panel " + Config.Gui.TITLE);
         setSize(Config.Gui.WIDTH, Config.Gui.HEIGHT);
         setDefaultCloseOperation(Config.Gui.DEFAULT_CLOSE_OPERATION);
-        setLocationToCenter();
+
+        int[] location = Util.center(getSize());
+        setLocation(location[0], location[1]);
+
         setResizable(true);
         setVisible(true);
     }

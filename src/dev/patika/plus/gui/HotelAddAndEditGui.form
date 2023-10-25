@@ -180,8 +180,12 @@
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
+                  <selected value="false"/>
                   <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="property.hotel.facility-1"/>
                 </properties>
+                <clientProperties>
+                  <correspondingEnumId class="java.lang.Integer" value="0"/>
+                </clientProperties>
               </component>
               <component id="13f3f" class="javax.swing.JCheckBox" binding="facility1CheckBox">
                 <constraints>
@@ -190,6 +194,9 @@
                 <properties>
                   <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="property.hotel.facility-2"/>
                 </properties>
+                <clientProperties>
+                  <correspondingEnumId class="java.lang.Integer" value="1"/>
+                </clientProperties>
               </component>
               <component id="167ec" class="javax.swing.JCheckBox" binding="facility2CheckBox">
                 <constraints>
@@ -198,6 +205,9 @@
                 <properties>
                   <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="property.hotel.facility-3"/>
                 </properties>
+                <clientProperties>
+                  <correspondingEnumId class="java.lang.Integer" value="2"/>
+                </clientProperties>
               </component>
               <component id="13422" class="javax.swing.JCheckBox" binding="facility3CheckBox">
                 <constraints>
@@ -206,6 +216,9 @@
                 <properties>
                   <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="property.hotel.facility-4"/>
                 </properties>
+                <clientProperties>
+                  <correspondingEnumId class="java.lang.Integer" value="3"/>
+                </clientProperties>
               </component>
               <component id="65141" class="javax.swing.JLabel" binding="facilitiesLabel">
                 <constraints>
@@ -222,6 +235,9 @@
                 <properties>
                   <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="property.hotel.facility-5"/>
                 </properties>
+                <clientProperties>
+                  <correspondingEnumId class="java.lang.Integer" value="4"/>
+                </clientProperties>
               </component>
               <component id="729c" class="javax.swing.JCheckBox" binding="facility5CheckBox">
                 <constraints>
@@ -230,6 +246,9 @@
                 <properties>
                   <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="property.hotel.facility-6"/>
                 </properties>
+                <clientProperties>
+                  <correspondingEnumId class="java.lang.Integer" value="5"/>
+                </clientProperties>
               </component>
               <component id="2f5ee" class="javax.swing.JCheckBox" binding="facility6CheckBox">
                 <constraints>
@@ -238,6 +257,9 @@
                 <properties>
                   <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="property.hotel.facility-7"/>
                 </properties>
+                <clientProperties>
+                  <correspondingEnumId class="java.lang.Integer" value="6"/>
+                </clientProperties>
               </component>
             </children>
           </grid>
@@ -256,6 +278,9 @@
                 <properties>
                   <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="property.hotel.board-type-1"/>
                 </properties>
+                <clientProperties>
+                  <correspondingEnumId class="java.lang.Integer" value="0"/>
+                </clientProperties>
               </component>
               <component id="195f4" class="javax.swing.JCheckBox" binding="boardType1CheckBox">
                 <constraints>
@@ -264,6 +289,9 @@
                 <properties>
                   <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="property.hotel.board-type-2"/>
                 </properties>
+                <clientProperties>
+                  <correspondingEnumId class="java.lang.Integer" value="1"/>
+                </clientProperties>
               </component>
               <component id="b6a9f" class="javax.swing.JCheckBox" binding="boardType2CheckBox">
                 <constraints>
@@ -272,6 +300,9 @@
                 <properties>
                   <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="property.hotel.board-type-3"/>
                 </properties>
+                <clientProperties>
+                  <correspondingEnumId class="java.lang.Integer" value="2"/>
+                </clientProperties>
               </component>
               <component id="c4e73" class="javax.swing.JCheckBox" binding="boardType3CheckBox">
                 <constraints>
@@ -280,6 +311,9 @@
                 <properties>
                   <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="property.hotel.board-type-4"/>
                 </properties>
+                <clientProperties>
+                  <correspondingEnumId class="java.lang.Integer" value="3"/>
+                </clientProperties>
               </component>
               <component id="d6f61" class="javax.swing.JLabel" binding="boardTypesLabel">
                 <constraints>
@@ -296,6 +330,9 @@
                 <properties>
                   <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="property.hotel.board-type-5"/>
                 </properties>
+                <clientProperties>
+                  <correspondingEnumId class="java.lang.Integer" value="4"/>
+                </clientProperties>
               </component>
               <component id="3a90f" class="javax.swing.JCheckBox" binding="boardType5CheckBox">
                 <constraints>
@@ -304,6 +341,9 @@
                 <properties>
                   <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="property.hotel.board-type-6"/>
                 </properties>
+                <clientProperties>
+                  <correspondingEnumId class="java.lang.Integer" value="5"/>
+                </clientProperties>
               </component>
               <component id="32748" class="javax.swing.JCheckBox" binding="boardType6CheckBox">
                 <constraints>
@@ -312,6 +352,9 @@
                 <properties>
                   <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="property.hotel.board-type-7"/>
                 </properties>
+                <clientProperties>
+                  <correspondingEnumId class="java.lang.Integer" value="6"/>
+                </clientProperties>
               </component>
             </children>
           </grid>
@@ -338,18 +381,27 @@
                 <properties>
                   <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="property.room.room-type-1"/>
                 </properties>
+                <clientProperties>
+                  <correspondingEnumId class="java.lang.Integer" value="0"/>
+                </clientProperties>
               </component>
               <component id="bbf5c" class="javax.swing.JSpinner" binding="singleRoomSpinner">
                 <constraints>
-                  <grid row="1" column="1" row-span="1" col-span="13" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="1" row-span="1" col-span="13" vsize-policy="0" hsize-policy="7" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
+                <clientProperties>
+                  <boundCheckBoxId class="java.lang.Integer" value="0"/>
+                </clientProperties>
               </component>
               <component id="c3e6d" class="javax.swing.JSpinner" binding="doubleRoomSpinner">
                 <constraints>
                   <grid row="2" column="1" row-span="1" col-span="13" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
+                <clientProperties>
+                  <boundCheckBoxId class="java.lang.Integer" value="1"/>
+                </clientProperties>
               </component>
               <component id="77dc7" class="javax.swing.JCheckBox" binding="doubleRoomCheckBox">
                 <constraints>
@@ -358,12 +410,18 @@
                 <properties>
                   <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="property.room.room-type-2"/>
                 </properties>
+                <clientProperties>
+                  <correspondingEnumId class="java.lang.Integer" value="1"/>
+                </clientProperties>
               </component>
               <component id="7c50d" class="javax.swing.JSpinner" binding="suiteRoomSpinner">
                 <constraints>
                   <grid row="3" column="1" row-span="1" col-span="13" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
+                <clientProperties>
+                  <boundCheckBoxId class="java.lang.Integer" value="2"/>
+                </clientProperties>
               </component>
               <component id="42ead" class="javax.swing.JCheckBox" binding="suiteRoomCheckBox">
                 <constraints>
@@ -372,6 +430,9 @@
                 <properties>
                   <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="property.room.room-type-3"/>
                 </properties>
+                <clientProperties>
+                  <correspondingEnumId class="java.lang.Integer" value="2"/>
+                </clientProperties>
               </component>
             </children>
           </grid>
@@ -407,29 +468,4 @@
       </hspacer>
     </children>
   </grid>
-  <buttonGroups>
-    <group name="roomsCheckBoxGroup">
-      <member id="25253"/>
-      <member id="77dc7"/>
-      <member id="42ead"/>
-    </group>
-    <group name="boardTypesCheckBoxGroup">
-      <member id="771dd"/>
-      <member id="195f4"/>
-      <member id="b6a9f"/>
-      <member id="c4e73"/>
-      <member id="9d85b"/>
-      <member id="3a90f"/>
-      <member id="32748"/>
-    </group>
-    <group name="facilitiesCheckBoxGroup">
-      <member id="6bd69"/>
-      <member id="13f3f"/>
-      <member id="167ec"/>
-      <member id="13422"/>
-      <member id="43665"/>
-      <member id="729c"/>
-      <member id="2f5ee"/>
-    </group>
-  </buttonGroups>
 </form>
