@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class HotelAddAndEditGui extends JFrame {
+public class HotelAneGui extends JFrame {
     private JPanel wrapper;
     private JTextField nameTextField;
     private JLabel nameLabel;
@@ -59,24 +59,18 @@ public class HotelAddAndEditGui extends JFrame {
     private JCheckBox boardType6CheckBox;
     private JLabel boardTypesLabel;
     private JPanel roomsPanel;
-    private JCheckBox singleRoomCheckBox;
-    private JCheckBox doubleRoomCheckBox;
-    private JCheckBox suiteRoomCheckBox;
-    private JSpinner singleRoomSpinner;
-    private JLabel roomsLabel;
-    private JSpinner doubleRoomSpinner;
-    private JSpinner suiteRoomSpinner;
     private JButton submitButton;
     private Hotel hotel;
     private ArrayList<JCheckBox> roomsPanelCheckBoxes;
     private ArrayList<JSpinner> roomsPanelSpinners;
 
-    public HotelAddAndEditGui() {
+    public HotelAneGui() {
         init();
+        initRoomsPanelComponents();
         initActions();
     }
 
-    public HotelAddAndEditGui(int hotelId) {
+    public HotelAneGui(int hotelId) {
         if (hotelId == -1) {
             Dialog.getPremades().displayError();
             return;
@@ -148,36 +142,6 @@ public class HotelAddAndEditGui extends JFrame {
         phoneNumberTextField.setText(hotel.getPhoneNumber());
         starsSlider.setValue(hotel.getStars());
 
-        // .Facilities panel
-        String facilities = hotel.getFacilities();
-        if (!facilities.isEmpty()) {
-            ArrayList<Integer> facilityIds = Util.parseIds(facilities);
-            Util.setAsSelectedAccordingTo(facilityIds, facilitiesPanel);
-        }
-
-        // .Board types panel
-        String boardTypes = hotel.getBoardTypes();
-        if (!boardTypes.isEmpty()) {
-            ArrayList<Integer> boardTypeIds = Util.parseIds(boardTypes);
-            Util.setAsSelectedAccordingTo(boardTypeIds, boardTypesPanel);
-        }
-
-        // .Rooms panel
-        String rooms = hotel.getAllRooms();
-        if (!rooms.isEmpty()) {
-            HashMap<Integer, Integer> roomsMap = Util.map(hotel.getAllRooms());
-            ArrayList<Integer> roomIds = new ArrayList<>(roomsMap.keySet());
-            Util.setAsSelectedAccordingTo(roomIds, roomsPanel);
-
-            for (JSpinner spinner : roomsPanelSpinners) {
-                int id = (Integer) spinner.getClientProperty("boundCheckBoxId");
-                System.out.println(Arrays.toString(roomIds.toArray()));
-                if (roomIds.contains(id)) {
-                    spinner.setValue(roomsMap.get(id));
-                }
-            }
-        }
-        else roomsPanelSpinners.forEach(spinner -> spinner.setEnabled(false));
     }
 
     private Hotel constructHotelFromFields() {
@@ -195,31 +159,11 @@ public class HotelAddAndEditGui extends JFrame {
         hotelData.add(phoneNumberTextField.getText());
         hotelData.add(starsSlider.getValue());
 
-        // Gets data from current details
-        // .Facilities panel
-        Component[] facilitiesPanelComponents = facilitiesPanel.getComponents();
-        ArrayList<Integer> facilityIds = Util.retrieveSelectedCheckboxIds(facilitiesPanelComponents);
-        String facilities = Util.stringify(facilityIds);
-        hotelData.add(facilities);
-
-        // .Board types panel
-        Component[] boardTypesPanelComponents = boardTypesPanel.getComponents();
-        ArrayList<Integer> boardTypeIds = Util.retrieveSelectedCheckboxIds(boardTypesPanelComponents);
-        String boardTypes = Util.stringify(boardTypeIds);
-        hotelData.add(boardTypes);
-
-        // .Rooms panel
-        Component[] roomsPanelComponents = roomsPanel.getComponents();
-        ArrayList<Integer> roomIds = Util.retrieveSelectedCheckboxIds(roomsPanelComponents);
-
-        ArrayList<Integer> roomValues = new ArrayList<>();
-        for (JSpinner spinner : roomsPanelSpinners) {
-            if (spinner.isEnabled()) roomValues.add((Integer) spinner.getValue());
-        }
-
-        String rooms = Util.stringify(roomIds, roomValues);
-        hotelData.add(rooms);
 
         return new Hotel(hotelData);
+    }
+
+    public static void main(String[] args) {
+        new HotelAneGui(1);
     }
 }

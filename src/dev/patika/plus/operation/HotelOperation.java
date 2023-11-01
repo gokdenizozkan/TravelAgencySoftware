@@ -7,17 +7,44 @@ import dev.patika.plus.util.Util;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class HotelOperation {
-    public static HashMap<Integer, Integer> parseRooms(String rooms) {
-        return Util.map(rooms);
-    }
 
     public static boolean delete(int hotelId) {
         // TODO: delete hotel
         System.out.println("WIP::delete hotel");
         return false;
+    }
+
+    public static ArrayList<Hotel> retrieveAll() {
+        String query = "SELECT * FROM hotel";
+        ArrayList<Hotel> hotels = new ArrayList<>();
+
+        Statement statement = null;
+        ResultSet resultSet = null;
+        Hotel hotel = null;
+        try {
+            statement = Database.getConnection().createStatement();
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                System.out.println("In while");
+                hotel = new Hotel(resultSet);
+                hotels.add(hotel);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } /*finally {
+            try {
+                if (statement != null) statement.close();
+                if (resultSet != null) resultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }*/
+        return hotels;
     }
 
     /**
@@ -82,7 +109,7 @@ public class HotelOperation {
     }
 
     private static void insert(Hotel hotel) {
-        String query = "INSERT INTO hotel (name, province, state, address, email, phone_number, stars, facilities, board_types, all_rooms, available_rooms) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO hotel (name, province, state, address, email, phone_number, stars, facilities, board_types) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = Database.getConnection().prepareStatement(query);
@@ -93,10 +120,6 @@ public class HotelOperation {
             preparedStatement.setString(5, hotel.getEmail());
             preparedStatement.setString(6, hotel.getPhoneNumber());
             preparedStatement.setInt(7, hotel.getStars());
-            preparedStatement.setString(8, hotel.getFacilities());
-            preparedStatement.setString(9, hotel.getBoardTypes());
-            preparedStatement.setString(10, hotel.getAllRooms());
-            preparedStatement.setString(11, hotel.getAvailableRooms());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -111,7 +134,7 @@ public class HotelOperation {
     }
 
     private static void update(Hotel hotel) {
-        String query = "UPDATE hotel SET name = ?, province = ?, state = ?, address = ?, email = ?, phone_number = ?, stars = ?, facilities = ?, board_types = ?, all_rooms = ?, available_rooms = ? WHERE id = ?";
+        String query = "UPDATE hotel SET name = ?, province = ?, state = ?, address = ?, email = ?, phone_number = ?, stars = ?, facilities = ?, board_types = ? WHERE id = ?";
         PreparedStatement preparedStatement = null;
 
         try {
@@ -123,11 +146,7 @@ public class HotelOperation {
             preparedStatement.setString(5, hotel.getEmail());
             preparedStatement.setString(6, hotel.getPhoneNumber());
             preparedStatement.setInt(7, hotel.getStars());
-            preparedStatement.setString(8, hotel.getFacilities());
-            preparedStatement.setString(9, hotel.getBoardTypes());
-            preparedStatement.setString(10, hotel.getAllRooms());
-            preparedStatement.setString(11, hotel.getAvailableRooms());
-            preparedStatement.setInt(12, hotel.getId());
+            preparedStatement.setInt(8, hotel.getId());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

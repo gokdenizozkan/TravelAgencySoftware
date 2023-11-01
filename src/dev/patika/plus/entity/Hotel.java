@@ -1,10 +1,13 @@
 package dev.patika.plus.entity;
 
+import dev.patika.plus.quality.Parsable;
+import dev.patika.plus.quality.Stringifiable;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class Hotel {
+public class Hotel implements Stringifiable, Parsable {
     private int id = -1;
     private String name = "";
     private String province = "";
@@ -13,10 +16,8 @@ public class Hotel {
     private String email = "";
     private String phoneNumber = "";
     private int stars = -1;
-    private String facilities = "";
-    private String boardTypes = "";
-    private String allRooms = ""; // roomId, amountOfRoom; represents total rooms, excluding availability
-    private String availableRooms = "";
+    private ArrayList<Integer> facilities = new ArrayList<>(); // 0,1,2,
+    private ArrayList<Integer> boardTypes = new ArrayList<>(); // 0,1,2,
 
     public Hotel(ResultSet resultSet) {
         try {
@@ -28,24 +29,15 @@ public class Hotel {
             this.email = resultSet.getString("email");
             this.phoneNumber = resultSet.getString("phone_number");
             this.stars = resultSet.getInt("stars");
-            this.facilities = resultSet.getString("facilities");
-            this.boardTypes = resultSet.getString("board_types");
-            this.allRooms = resultSet.getString("all_rooms");
-            this.availableRooms = resultSet.getString("available_rooms");
-            System.out.println("In constr" + resultSet.getString("all_rooms"));
+            this.facilities = parseIntegerList(resultSet.getString("facilities"), ",");
+            this.boardTypes = parseIntegerList(resultSet.getString("board_types"), ",");
         } catch (SQLException exception) {
             exception.printStackTrace();
-        } finally {
-            try {
-                resultSet.close();
-            } catch (SQLException exception) {
-                exception.printStackTrace();
-            }
         }
     }
 
     /**
-     * Constructs a hotel object with data provided in list. Data should not contain "available_rooms" column.
+     * Constructs a hotel object without availableRooms data.
      * @param data of type ArrayList<Object>
      */
     public Hotel(ArrayList<Object> data) {
@@ -58,9 +50,8 @@ public class Hotel {
         this.email = (String) data.get(i++);
         this.phoneNumber = (String) data.get(i++);
         this.stars = (int) data.get(i++);
-        this.facilities = (String) data.get(i++);
-        this.boardTypes = (String) data.get(i++);
-        this.allRooms = (String) data.get(i);
+        this.facilities = parseIntegerList((String) data.get(i++), ",");
+        this.boardTypes = parseIntegerList((String) data.get(i), ",");
     }
 
     public int getId() {
@@ -127,35 +118,19 @@ public class Hotel {
         this.stars = stars;
     }
 
-    public String getFacilities() {
+    public ArrayList<Integer> getFacilities() {
         return facilities;
     }
 
-    public void setFacilities(String facilities) {
+    public void setFacilities(ArrayList<Integer> facilities) {
         this.facilities = facilities;
     }
 
-    public String getBoardTypes() {
+    public ArrayList<Integer> getBoardTypes() {
         return boardTypes;
     }
 
-    public void setBoardTypes(String boardTypes) {
+    public void setBoardTypes(ArrayList<Integer> boardTypes) {
         this.boardTypes = boardTypes;
-    }
-
-    public String getAllRooms() {
-        return allRooms;
-    }
-
-    public void setAllRooms(String allRooms) {
-        this.allRooms = allRooms;
-    }
-
-    public String getAvailableRooms() {
-        return availableRooms;
-    }
-
-    public void setAvailableRooms(String availableRooms) {
-        this.availableRooms = availableRooms;
     }
 }
