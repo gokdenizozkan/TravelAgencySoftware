@@ -2,6 +2,7 @@ package dev.patika.plus.gui;
 
 import dev.patika.plus.entity.Property;
 import dev.patika.plus.essential.Database;
+import dev.patika.plus.util.Util;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -34,9 +35,11 @@ public class PropertyAneGui extends JFrame {
     private JButton submitJb;
     private DefaultTableModel availablesTableModel;
     private DefaultTableModel selectedTableModel;
-    private JTextField originJtf;
+    private final JTextField originJtf;
 
     public PropertyAneGui(JTextField originJtf, String propertyType) {
+        this.originJtf = originJtf;
+
         init();
         initTables();
         initialTableLoad(propertyType);
@@ -44,6 +47,8 @@ public class PropertyAneGui extends JFrame {
     }
 
     public PropertyAneGui(JTextField originJtf, String propertyType, ArrayList<Integer> initialSelectedPropertyIds) {
+        this.originJtf = originJtf;
+
         init();
         initTables();
         initialTableLoad(propertyType, initialSelectedPropertyIds);
@@ -53,7 +58,7 @@ public class PropertyAneGui extends JFrame {
     private void init() {
         setTitle("Property Management Panel");
         setSize(800, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setContentPane(wrapper);
         setVisible(true);
     }
@@ -76,8 +81,8 @@ public class PropertyAneGui extends JFrame {
     private void initialTableLoad(String propertyType) {
         String query = "SELECT * FROM property WHERE of_type = ?";
 
-        PreparedStatement preparedStatement;
-        ResultSet resultSet;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         Property property;
         try {
             preparedStatement = Database.getConnection().prepareStatement(query);
@@ -90,6 +95,8 @@ public class PropertyAneGui extends JFrame {
             }
         } catch (SQLException exception) {
             exception.printStackTrace();
+        } finally {
+            Util.close(preparedStatement, resultSet);
         }
     }
 
@@ -118,6 +125,8 @@ public class PropertyAneGui extends JFrame {
             }
         } catch (SQLException exception) {
             exception.printStackTrace();
+        } finally {
+            Util.close(preparedStatement, resultSet);
         }
     }
 

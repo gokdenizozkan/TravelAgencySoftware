@@ -3,6 +3,8 @@ package dev.patika.plus.gui;
 import dev.patika.plus.entity.Hotel;
 import dev.patika.plus.essential.Config;
 import dev.patika.plus.operation.HotelOperation;
+import dev.patika.plus.operation.PropertyOperation;
+import dev.patika.plus.quality.Parsable;
 import dev.patika.plus.util.Dialog;
 import dev.patika.plus.util.Util;
 
@@ -11,62 +13,44 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
-import javax.swing.JCheckBox;
-import javax.swing.JSpinner;
 import javax.swing.JButton;
 
-import java.awt.Component;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 
 public class HotelAneGui extends JFrame {
     private JPanel wrapper;
-    private JTextField nameTextField;
-    private JLabel nameLabel;
-    private JLabel provinceLabel;
-    private JTextField provinceTextField;
-    private JLabel stateLabel;
-    private JTextField stateTextField;
-    private JLabel addressLabel;
-    private JTextField addressTextField;
-    private JLabel emailLabel;
-    private JTextField emailTextField;
-    private JLabel phoneNumberLabel;
-    private JTextField phoneNumberTextField;
-    private JSlider starsSlider;
-    private JLabel starsLabel;
-    private JPanel basicInfoPanel;
-    private JLabel basicInfoLabel;
-    private JPanel currentDetailsPanel;
-    private JLabel currentDetailsLabel;
-    private JPanel facilitiesPanel;
-    private JCheckBox facility0CheckBox;
-    private JCheckBox facility1CheckBox;
-    private JCheckBox facility2CheckBox;
-    private JCheckBox facility3CheckBox;
-    private JCheckBox facility4CheckBox;
-    private JCheckBox facility5CheckBox;
-    private JCheckBox facility6CheckBox;
-    private JLabel facilitiesLabel;
-    private JPanel boardTypesPanel;
-    private JCheckBox boardType0CheckBox;
-    private JCheckBox boardType1CheckBox;
-    private JCheckBox boardType2CheckBox;
-    private JCheckBox boardType3CheckBox;
-    private JCheckBox boardType4CheckBox;
-    private JCheckBox boardType5CheckBox;
-    private JCheckBox boardType6CheckBox;
-    private JLabel boardTypesLabel;
+    private JTextField nameJtf;
+    private JLabel nameJl;
+    private JLabel provinceJl;
+    private JTextField provinceJtf;
+    private JLabel stateJl;
+    private JTextField stateJtf;
+    private JLabel addressJl;
+    private JTextField addressJtf;
+    private JLabel emailJl;
+    private JTextField emailJtf;
+    private JLabel phoneNumberJl;
+    private JTextField phoneNumberJtf;
+    private JSlider starsJs;
+    private JLabel starsJl;
+    private JPanel basicInfoJp;
+    private JLabel basicInfoJl;
+    private JPanel currentDetailsJp;
+    private JLabel currentDetailsJl;
     private JPanel roomsPanel;
-    private JButton submitButton;
+    private JButton submitJb;
+    private JPanel aneJp;
+    private JLabel facilitiesJl;
+    private JTextField facilitiesJtf;
+    private JButton facilitiesJb;
+    private JLabel boardTypesJl;
+    private JTextField boardTypesJtf;
+    private JButton boardTypesJb;
     private Hotel hotel;
-    private ArrayList<JCheckBox> roomsPanelCheckBoxes;
-    private ArrayList<JSpinner> roomsPanelSpinners;
 
     public HotelAneGui() {
         init();
-        initRoomsPanelComponents();
+        initFields();
         initActions();
     }
 
@@ -75,8 +59,9 @@ public class HotelAneGui extends JFrame {
             Dialog.getPremades().displayError();
             return;
         }
+
         init();
-        initRoomsPanelComponents();
+        initFields();
         initActions();
 
         this.hotel = HotelOperation.retrieve(hotelId);
@@ -96,52 +81,51 @@ public class HotelAneGui extends JFrame {
         setVisible(true);
     }
 
-    private void initRoomsPanelComponents() {
-        roomsPanelCheckBoxes = new ArrayList<>();
-        roomsPanelSpinners = new ArrayList<>();
-
-        for (Component component : roomsPanel.getComponents()) {
-            if (component instanceof JCheckBox) {
-                roomsPanelCheckBoxes.add((JCheckBox) component);
-            }
-            else if (component instanceof JSpinner) {
-                roomsPanelSpinners.add((JSpinner) component);
-            }
-        }
-
-
+    private void initFields() {
+        if (facilitiesJtf.getClientProperty("representativeIds") == null)
+            facilitiesJtf.putClientProperty("representativeIds", "");
+        if (boardTypesJtf.getClientProperty("representativeIds") == null)
+            boardTypesJtf.putClientProperty("representativeIds", "");
     }
 
     private void initActions() {
-        submitButton.addActionListener(e -> {
+        // details
+        facilitiesJb.addActionListener(e -> {
+            if (facilitiesJtf.getText().isEmpty())
+                new PropertyAneGui(facilitiesJtf, "hotel_facility");
+            else {
+                String representativeIds = facilitiesJtf.getClientProperty("representativeIds").toString();
+                ArrayList<Integer> ids = Parsable.parseIntegerListStatic(representativeIds, ",");
+                new PropertyAneGui(facilitiesJtf, "hotel_facility", ids);
+            }
+        });
+
+        boardTypesJb.addActionListener(e -> {
+            if (boardTypesJtf.getText().isEmpty())
+                new PropertyAneGui(boardTypesJtf, "board_type");
+            else {
+                String representativeIds = boardTypesJtf.getClientProperty("representativeIds").toString();
+                ArrayList<Integer> ids = Parsable.parseIntegerListStatic(representativeIds, ",");
+                new PropertyAneGui(boardTypesJtf, "board_type", ids);
+            }
+        });
+
+        submitJb.addActionListener(e -> {
             Hotel hotel = constructHotelFromFields();
             HotelOperation.add(hotel);
         });
-
-        for (JCheckBox checkBox : roomsPanelCheckBoxes) {
-            checkBox.addActionListener(e -> {
-                int id = (int) checkBox.getClientProperty("correspondingEnumId");
-                JSpinner spinner = roomsPanelSpinners.get(id);
-
-                if (checkBox.isSelected()) {
-                    spinner.setEnabled(true);
-                }
-                else {
-                    spinner.setEnabled(false);
-                }
-            });
-        }
     }
 
     private void fillFields(Hotel hotel) {
-        nameTextField.setText(hotel.getName());
-        provinceTextField.setText(hotel.getProvince());
-        stateTextField.setText(hotel.getState());
-        addressTextField.setText(hotel.getAddress());
-        emailTextField.setText(hotel.getEmail());
-        phoneNumberTextField.setText(hotel.getPhoneNumber());
-        starsSlider.setValue(hotel.getStars());
-
+        nameJtf.setText(hotel.getName());
+        provinceJtf.setText(hotel.getProvince());
+        stateJtf.setText(hotel.getState());
+        addressJtf.setText(hotel.getAddress());
+        emailJtf.setText(hotel.getEmail());
+        phoneNumberJtf.setText(hotel.getPhoneNumber());
+        starsJs.setValue(hotel.getStars());
+        fillTextField(facilitiesJtf, hotel.getFacilities());
+        fillTextField(boardTypesJtf, hotel.getBoardTypes());
     }
 
     private Hotel constructHotelFromFields() {
@@ -151,19 +135,35 @@ public class HotelAneGui extends JFrame {
         else hotelData.add(-1);
 
         // Gets data from basic info
-        hotelData.add(nameTextField.getText());
-        hotelData.add(provinceTextField.getText());
-        hotelData.add(stateTextField.getText());
-        hotelData.add(addressTextField.getText());
-        hotelData.add(emailTextField.getText());
-        hotelData.add(phoneNumberTextField.getText());
-        hotelData.add(starsSlider.getValue());
-
+        hotelData.add(nameJtf.getText());
+        hotelData.add(provinceJtf.getText());
+        hotelData.add(stateJtf.getText());
+        hotelData.add(addressJtf.getText());
+        hotelData.add(emailJtf.getText());
+        hotelData.add(phoneNumberJtf.getText());
+        hotelData.add(starsJs.getValue());
+        hotelData.add(facilitiesJtf.getClientProperty("representativeIds").toString());
+        hotelData.add(boardTypesJtf.getClientProperty("representativeIds").toString());
 
         return new Hotel(hotelData);
     }
 
+    /**
+     * Fills the text field and its custom client property
+     * with the given representative ids and their corresponding names.
+     * @param textField The text field to be filled.
+     * @param representativeIds The string that holds representative ids.
+     */
+    private void fillTextField(JTextField textField, String representativeIds) {
+        if (representativeIds.isEmpty()) return;
+        textField.putClientProperty("representativeIds", representativeIds);
+
+        ArrayList<Integer> ids = Parsable.parseIntegerListStatic(representativeIds, ",");
+        textField.setText(PropertyOperation.retrieveNames(ids).toString());
+        textField.putClientProperty("representativeIds", representativeIds);
+    }
+
     public static void main(String[] args) {
-        new HotelAneGui(1);
+        new HotelAneGui();
     }
 }

@@ -17,4 +17,13 @@ public interface Parsable {
         }
         return ids;
     }
+
+    static ArrayList<Integer> parseIntegerListStatic(String str, String separator) {
+        String[] parts = str.split(separator);
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (String part : parts) {
+            ids.add(Integer.parseInt(part));
+        }
+        return ids;
+    }
 }

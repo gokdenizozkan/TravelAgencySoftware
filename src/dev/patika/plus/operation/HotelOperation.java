@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class HotelOperation {
 
@@ -36,14 +35,9 @@ public class HotelOperation {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } /*finally {
-            try {
-                if (statement != null) statement.close();
-                if (resultSet != null) resultSet.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }*/
+        } finally {
+            Util.close(statement, resultSet);
+        }
         return hotels;
     }
 
@@ -66,12 +60,7 @@ public class HotelOperation {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-                if (resultSet != null) resultSet.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Util.close(preparedStatement, resultSet);
         }
         return hotel;
     }
@@ -83,7 +72,7 @@ public class HotelOperation {
 
     public static boolean exists(int hotelId) {
         String query = "SELECT * FROM hotel WHERE id = ? LIMIT 1";
-        boolean exists = false;
+        boolean exists;
 
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -95,21 +84,16 @@ public class HotelOperation {
             exists = resultSet.next();
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            exists = false;
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-                if (resultSet != null) resultSet.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Util.close(preparedStatement, resultSet);
         }
 
         return exists;
     }
 
     private static void insert(Hotel hotel) {
-        String query = "INSERT INTO hotel (name, province, state, address, email, phone_number, stars, facilities, board_types) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO hotel (name, province, state, address, email, phone_number, stars, facilities, board_types) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = Database.getConnection().prepareStatement(query);
@@ -120,16 +104,14 @@ public class HotelOperation {
             preparedStatement.setString(5, hotel.getEmail());
             preparedStatement.setString(6, hotel.getPhoneNumber());
             preparedStatement.setInt(7, hotel.getStars());
+            preparedStatement.setString(8, hotel.getFacilities());
+            preparedStatement.setString(9, hotel.getBoardTypes());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Util.close(preparedStatement);
         }
     }
 
@@ -146,17 +128,15 @@ public class HotelOperation {
             preparedStatement.setString(5, hotel.getEmail());
             preparedStatement.setString(6, hotel.getPhoneNumber());
             preparedStatement.setInt(7, hotel.getStars());
-            preparedStatement.setInt(8, hotel.getId());
+            preparedStatement.setString(8, hotel.getFacilities());
+            preparedStatement.setString(9, hotel.getBoardTypes());
+            preparedStatement.setInt(10, hotel.getId());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Util.close(preparedStatement);
         }
 
     }

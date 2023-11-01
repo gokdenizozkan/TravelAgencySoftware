@@ -16,8 +16,8 @@ public class Hotel implements Stringifiable, Parsable {
     private String email = "";
     private String phoneNumber = "";
     private int stars = -1;
-    private ArrayList<Integer> facilities = new ArrayList<>(); // 0,1,2,
-    private ArrayList<Integer> boardTypes = new ArrayList<>(); // 0,1,2,
+    private String facilities = ""; // 0,1,2,
+    private String boardTypes = ""; // 0,1,2,
 
     public Hotel(ResultSet resultSet) {
         try {
@@ -29,15 +29,15 @@ public class Hotel implements Stringifiable, Parsable {
             this.email = resultSet.getString("email");
             this.phoneNumber = resultSet.getString("phone_number");
             this.stars = resultSet.getInt("stars");
-            this.facilities = parseIntegerList(resultSet.getString("facilities"), ",");
-            this.boardTypes = parseIntegerList(resultSet.getString("board_types"), ",");
+            this.facilities = resultSet.getString("facilities");
+            this.boardTypes = resultSet.getString("board_types");
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
     }
 
     /**
-     * Constructs a hotel object without availableRooms data.
+     * Constructs a hotel object with the given data.
      * @param data of type ArrayList<Object>
      */
     public Hotel(ArrayList<Object> data) {
@@ -50,8 +50,8 @@ public class Hotel implements Stringifiable, Parsable {
         this.email = (String) data.get(i++);
         this.phoneNumber = (String) data.get(i++);
         this.stars = (int) data.get(i++);
-        this.facilities = parseIntegerList((String) data.get(i++), ",");
-        this.boardTypes = parseIntegerList((String) data.get(i), ",");
+        this.facilities = (String) data.get(i++);
+        this.boardTypes = (String) data.get(i);
     }
 
     public int getId() {
@@ -118,19 +118,27 @@ public class Hotel implements Stringifiable, Parsable {
         this.stars = stars;
     }
 
-    public ArrayList<Integer> getFacilities() {
+    public String getFacilities() {
         return facilities;
     }
 
-    public void setFacilities(ArrayList<Integer> facilities) {
+    public void setFacilities(String facilities) {
         this.facilities = facilities;
     }
 
-    public ArrayList<Integer> getBoardTypes() {
+    public ArrayList<Integer> getFacilitiesParsed() {
+        return parseIntegerList(facilities, ",");
+    }
+
+    public void setFacilities(ArrayList<Integer> facilities) {
+        this.facilities = stringifyList(facilities, ",");
+    }
+
+    public String getBoardTypes() {
         return boardTypes;
     }
 
-    public void setBoardTypes(ArrayList<Integer> boardTypes) {
+    public void setBoardTypes(String boardTypes) {
         this.boardTypes = boardTypes;
     }
 }

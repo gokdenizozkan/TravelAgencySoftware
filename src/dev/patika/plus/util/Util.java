@@ -1,8 +1,7 @@
 package dev.patika.plus.util;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.ArrayList;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 public class Util {
     // GUI
@@ -13,15 +12,13 @@ public class Util {
         return new int[]{x, y};
     }
 
-
-    // Misc
-    public static String simplifyConstantName(String constantName) {
-        String[] tokens = constantName.split("_");
-        StringBuilder simpleName = new StringBuilder();
-        for (String token : tokens) {
-            simpleName.append(token.charAt(0)).append(token.substring(1).toLowerCase()).append(" ");
+    public static void close(java.lang.AutoCloseable... closables) {
+        try {
+            for (java.lang.AutoCloseable closable : closables) {
+                closable.close();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-
-        return simpleName.toString().strip();
     }
 }
