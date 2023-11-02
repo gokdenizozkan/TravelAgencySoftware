@@ -164,6 +164,6 @@ public class HotelAneGui extends JFrame {
     }
 
     public static void main(String[] args) {
-        new HotelAneGui();
+        new HotelAneGui(1);
     }
 }

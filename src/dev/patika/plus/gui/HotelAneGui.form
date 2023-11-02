@@ -193,6 +193,9 @@
                   <editable value="true"/>
                   <enabled value="false"/>
                 </properties>
+                <clientProperties>
+                  <representativeIds class="java.lang.String" value=""/>
+                </clientProperties>
               </component>
               <component id="7b593" class="javax.swing.JButton" binding="facilitiesJb">
                 <constraints>

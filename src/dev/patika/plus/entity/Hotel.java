@@ -16,8 +16,9 @@ public class Hotel implements Stringifiable, Parsable {
     private String email = "";
     private String phoneNumber = "";
     private int stars = -1;
-    private String facilities = ""; // 0,1,2,
-    private String boardTypes = ""; // 0,1,2,
+    private String facilities = ""; // 1,2,
+    private String boardTypes = ""; // 13,14,
+
 
     public Hotel(ResultSet resultSet) {
         try {

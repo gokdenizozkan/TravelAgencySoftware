@@ -16,6 +16,29 @@ public class Date {
         else return year % 4 == 0;
     }
 
+    /**
+     * Returns a String array of years between from and to.
+     * @param from inclusive
+     * @param to inclusive
+     * @return String array of years
+     */
+    public static String[] getYears(int from, int to) {
+        String[] years = new String[to - from + 1];
+        for (int i = 0; i < years.length; i++) years[i] = String.valueOf(from + i);
+        return years;
+    }
+
+    public static String[] getMonths() {
+        return new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+    }
+
+    public static String[] getDays() {
+        return new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
+                            "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
+                            "21", "22", "23", "24", "25", "26", "27", "28", "29", "30",
+                            "31"};
+    }
+
     public enum Month {
         JANUARY(1, 31),
         FEBRUARY(2, 28),
