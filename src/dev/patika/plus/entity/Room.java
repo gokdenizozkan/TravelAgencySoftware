@@ -5,7 +5,6 @@ import dev.patika.plus.quality.Stringifiable;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class Room implements Parsable, Stringifiable {
     private int id;
@@ -14,9 +13,10 @@ public class Room implements Parsable, Stringifiable {
     private int beds;
     private int stock;
     private int size; // in square meter
-    private ArrayList<Integer> facilities; // 0,1,2,3...
+    private String facilities; // 0,1,2,3...
     private int seasonId;
-    private int price;
+    private int priceAdult;
+    private int priceChild;
 
     public Room(ResultSet resultSet) {
         try {
@@ -26,11 +26,105 @@ public class Room implements Parsable, Stringifiable {
             this.beds = resultSet.getInt("beds");
             this.stock = resultSet.getInt("stock");
             this.size = resultSet.getInt("size");
-            this.facilities = parseIntegerList(resultSet.getString("facilities"), ",");
+            this.facilities = resultSet.getString("facilities");
             this.seasonId = resultSet.getInt("season_id");
-            this.price = resultSet.getInt("price");
+            this.priceAdult = resultSet.getInt("price_adult");
+            this.priceChild = resultSet.getInt("price_child");
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
+    }
+
+    public Room(int hottelId, String ofType, int beds, int stock, int size, String facilities, int seasonId,
+                int priceAdult, int priceChild) {
+        this.hotelId = hottelId;
+        this.ofType = ofType;
+        this.beds = beds;
+        this.stock = stock;
+        this.size = size;
+        this.facilities = facilities;
+        this.seasonId = seasonId;
+        this.priceAdult = priceAdult;
+        this.priceChild = priceChild;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(int hotelId) {
+        this.hotelId = hotelId;
+    }
+
+    public String getOfType() {
+        return ofType;
+    }
+
+    public void setOfType(String ofType) {
+        this.ofType = ofType;
+    }
+
+    public int getBeds() {
+        return beds;
+    }
+
+    public void setBeds(int beds) {
+        this.beds = beds;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public String getFacilities() {
+        return facilities;
+    }
+
+    public void setFacilities(String facilities) {
+        this.facilities = facilities;
+    }
+
+    public int getSeasonId() {
+        return seasonId;
+    }
+
+    public void setSeasonId(int seasonId) {
+        this.seasonId = seasonId;
+    }
+
+    public int getPriceAdult() {
+        return priceAdult;
+    }
+
+    public void setPriceAdult(int priceAdult) {
+        this.priceAdult = priceAdult;
+    }
+
+    public int getPriceChild() {
+        return priceChild;
+    }
+
+    public void setPriceChild(int priceChild) {
+        this.priceChild = priceChild;
     }
 }

@@ -138,6 +138,5 @@ public class HotelOperation {
         } finally {
             Util.close(preparedStatement);
         }
-
     }
 }
