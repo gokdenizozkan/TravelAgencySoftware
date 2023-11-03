@@ -104,8 +104,8 @@ public class SeasonAneGui extends JFrame {
 
         addJb.addActionListener(e -> {
             String name = nameJtf.getText();
-            String startDate = startYearJcb.getSelectedItem() + "/" + startMonthJcb.getSelectedItem() + "/" + startDayJcb.getSelectedItem();
-            String endDate = endYearJcb.getSelectedItem() + "/" + endMonthJcb.getSelectedItem() + "/" + endDayJcb.getSelectedItem();
+            String startDate = Date.ify(startYearJcb, startMonthJcb, startDayJcb);
+            String endDate = Date.ify(endYearJcb, endMonthJcb, endDayJcb);
 
             SeasonOperation.add(hotelId, name, startDate, endDate);
             loadSeasons();
@@ -114,8 +114,8 @@ public class SeasonAneGui extends JFrame {
         updateJb.addActionListener(e -> {
             int seasonId = (int) updateJb.getClientProperty("id");
             String name = nameJtf.getText();
-            String startDate = startYearJcb.getSelectedItem() + "/" + startMonthJcb.getSelectedItem() + "/" + startDayJcb.getSelectedItem();
-            String endDate = endYearJcb.getSelectedItem() + "/" + endMonthJcb.getSelectedItem() + "/" + endDayJcb.getSelectedItem();
+            String startDate = Date.ify(startYearJcb, startMonthJcb, startDayJcb);
+            String endDate = Date.ify(endYearJcb, endMonthJcb, endDayJcb);
             SeasonOperation.update(seasonId, name, startDate, endDate);
             loadSeasons();
         });
@@ -157,12 +157,12 @@ public class SeasonAneGui extends JFrame {
 
         // dates
         // .start
-        String[] startDateParts = startDate.split("/");
+        String[] startDateParts = Date.split(startDate);
         startYearJcb.setSelectedItem(startDateParts[0]);
         startMonthJcb.setSelectedItem(startDateParts[1]);
         startDayJcb.setSelectedItem(startDateParts[2]);
         // .end
-        String[] endDateParts = endDate.split("/");
+        String[] endDateParts = Date.split(endDate);
         endYearJcb.setSelectedItem(endDateParts[0]);
         endMonthJcb.setSelectedItem(endDateParts[1]);
         endDayJcb.setSelectedItem(endDateParts[2]);

@@ -1,6 +1,7 @@
 package dev.patika.plus.util;
 
-import javax.swing.*;
+import javax.swing.JComboBox;
+
 
 public class Date {
     private int day;
@@ -61,9 +62,13 @@ public class Date {
      * @return dateified version of the given date
      */
     public static String ify(JComboBox yearJcb, JComboBox monthJcb, JComboBox dayJcb) {
-        return yearJcb.getSelectedItem().toString() + "/" +
-                monthJcb.getSelectedItem().toString() + "/" +
+        return yearJcb.getSelectedItem().toString() + "-" +
+                monthJcb.getSelectedItem().toString() + "-" +
                 dayJcb.getSelectedItem().toString();
+    }
+
+    public static String[] split(String date) {
+        return date.split("-");
     }
 
     public enum Month {

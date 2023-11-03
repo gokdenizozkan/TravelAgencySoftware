@@ -3,6 +3,7 @@ package dev.patika.plus.gui;
 import dev.patika.plus.entity.Hotel;
 import dev.patika.plus.essential.Config;
 import dev.patika.plus.operation.HotelOperation;
+import dev.patika.plus.operation.RoomAvailabilityOperation;
 import dev.patika.plus.util.Date;
 
 import javax.swing.JFrame;
@@ -105,8 +106,12 @@ public class HotelFinderGui extends JFrame {
             String checkOutDate = Date.ify(checkOutYearJcb, checkOutMonthJcb, checkOutDayJcb);
             hotelsTableModel.setRowCount(0);
             for (Hotel hotel : HotelOperation.retrieveBy(province, state)) {
-                // TODO stock check by RoomOpearion.isRoomAvailable :: after reservation table is configured
+                // stock check by RoomOpearion.isRoomAvailable
+                // if not available, continue
                 // if available, add to table
+                boolean available = RoomAvailabilityOperation.isAvailable(hotel.getId(), checkInDate, checkOutDate);
+                if (!available) continue;
+
                 hotelsTableModel.addRow(new Object[]{
                         hotel.getId(),
                         hotel.getName(),
