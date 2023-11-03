@@ -10,58 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SeasonOperation {
-
-    public static ArrayList<Season> retrieveAll(int hotelId) {
-        String query = "SELECT * FROM season WHERE hotel_id = ?";
-        ArrayList<Season> seasons = new ArrayList<>();
-
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        Season season = null;
-        try {
-            preparedStatement = Database.getConnection().prepareStatement(query);
-            preparedStatement.setInt(1, hotelId);
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                season = new Season(resultSet);
-                seasons.add(season);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-                if (resultSet != null) resultSet.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return seasons;
-    }
-    public static Season retrieve(int seasonId) {
-        String query = "SELECT * FROM season WHERE id = ? LIMIT 1";
-
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        Season season = null;
-        try {
-            preparedStatement = Database.getConnection().prepareStatement(query);
-            preparedStatement.setInt(1, seasonId);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) season = new Season(resultSet);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-                if (resultSet != null) resultSet.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return season;
-    }
-
     public static boolean add(int hotelId, String name, String startDate, String endDate) {
         int response = -1;
         String query = "INSERT INTO season (hotel_id, name, start, end) VALUES (?, ?, ?, ?)";
@@ -119,5 +67,57 @@ public class SeasonOperation {
         }
 
         return response != -1;
+    }
+
+    public static ArrayList<Season> retrieveAll(int hotelId) {
+        String query = "SELECT * FROM season WHERE hotel_id = ?";
+        ArrayList<Season> seasons = new ArrayList<>();
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Season season = null;
+        try {
+            preparedStatement = Database.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, hotelId);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                season = new Season(resultSet);
+                seasons.add(season);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (resultSet != null) resultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return seasons;
+    }
+
+    public static Season retrieve(int seasonId) {
+        String query = "SELECT * FROM season WHERE id = ? LIMIT 1";
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Season season = null;
+        try {
+            preparedStatement = Database.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, seasonId);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) season = new Season(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (resultSet != null) resultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return season;
     }
 }

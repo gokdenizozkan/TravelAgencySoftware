@@ -11,60 +11,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class HotelOperation {
-
-    public static boolean delete(int hotelId) {
-        // TODO: delete hotel
-        System.out.println("WIP::delete hotel");
-        return false;
-    }
-
-    public static ArrayList<Hotel> retrieveAll() {
-        String query = "SELECT * FROM hotel";
-        ArrayList<Hotel> hotels = new ArrayList<>();
-
-        Statement statement = null;
-        ResultSet resultSet = null;
-        Hotel hotel = null;
-        try {
-            statement = Database.getConnection().createStatement();
-            resultSet = statement.executeQuery(query);
-            while (resultSet.next()) {
-                System.out.println("In while");
-                hotel = new Hotel(resultSet);
-                hotels.add(hotel);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            Util.close(statement, resultSet);
-        }
-        return hotels;
-    }
-
-    /**
-     * Retrieves the constructed hotel object with data stored in the database by accessing them via its hotelId.
-     * @param hotelId of which you want to retrieve hotel object holding data of a specific hotel.
-     * @return Hotel object. Can be null if there is no hotel with the given hotelId.
-     */
-    public static Hotel retrieve(int hotelId) {
-        String query = "SELECT * FROM hotel WHERE id = ? LIMIT 1";
-
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        Hotel hotel = null;
-        try {
-            preparedStatement = Database.getConnection().prepareStatement(query);
-            preparedStatement.setInt(1, hotelId);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) hotel = new Hotel(resultSet);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            Util.close(preparedStatement, resultSet);
-        }
-        return hotel;
-    }
-
     public static void add(Hotel hotel) {
         if (exists(hotel.getId())) update(hotel);
         else insert(hotel);
@@ -139,4 +85,127 @@ public class HotelOperation {
             Util.close(preparedStatement);
         }
     }
+
+    public static boolean delete(int hotelId) {
+        // TODO: delete hotel
+        System.out.println("WIP::delete hotel");
+        return false;
+    }
+
+    /**
+     * Retrieves the constructed hotel object with data stored in the database by accessing them via its hotelId.
+     * @param hotelId of which you want to retrieve hotel object holding data of a specific hotel.
+     * @return Hotel object. Can be null if there is no hotel with the given hotelId.
+     */
+    public static Hotel retrieve(int hotelId) {
+        String query = "SELECT * FROM hotel WHERE id = ? LIMIT 1";
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Hotel hotel = null;
+        try {
+            preparedStatement = Database.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, hotelId);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) hotel = new Hotel(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Util.close(preparedStatement, resultSet);
+        }
+        return hotel;
+    }
+
+    public static ArrayList<Hotel> retrieveAll() {
+        String query = "SELECT * FROM hotel";
+        ArrayList<Hotel> hotels = new ArrayList<>();
+
+        Statement statement = null;
+        ResultSet resultSet = null;
+        Hotel hotel = null;
+        try {
+            statement = Database.getConnection().createStatement();
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                System.out.println("In while");
+                hotel = new Hotel(resultSet);
+                hotels.add(hotel);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Util.close(statement, resultSet);
+        }
+        return hotels;
+    }
+
+    public static ArrayList<String> retrieveProvinces() {
+        String query = "SELECT province FROM hotel";
+
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = Database.getConnection().createStatement();
+            resultSet = statement.executeQuery(query);
+            ArrayList<String> provinces = new ArrayList<>();
+            while (resultSet.next()) {
+                String province = resultSet.getString("province");
+                if (!provinces.contains(province)) provinces.add(province);
+            }
+            return provinces;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            Util.close(statement, resultSet);
+        }
+    }
+
+    public static ArrayList<String> retrieveStates(String ofProvince) {
+        String query = "SELECT state FROM hotel WHERE province = ?";
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        ArrayList<String> states = new ArrayList<>();
+        try {
+            preparedStatement = Database.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, ofProvince);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String state = resultSet.getString("state");
+                if (!states.contains(state)) states.add(state);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            Util.close(preparedStatement, resultSet);
+        }
+        return states;
+    }
+
+    public static Hotel[] retrieveBy(String province, String state) {
+        String query = "SELECT * FROM hotel WHERE province = ? AND state = ?";
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        ArrayList<Hotel> hotels = new ArrayList<>();
+        try {
+            preparedStatement = Database.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, province);
+            preparedStatement.setString(2, state);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Hotel hotel = new Hotel(resultSet);
+                hotels.add(hotel);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Util.close(preparedStatement, resultSet);
+        }
+        return hotels.toArray(new Hotel[0]);
+    }
+
+
 }

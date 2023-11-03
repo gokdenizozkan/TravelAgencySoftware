@@ -83,4 +83,9 @@ public class RoomOperation {
             Util.close(preparedStatement);
         }
     }
+
+    public static boolean isRoomAvailable(int hotelId) {
+        // TODO stock check by reservation table
+        return false;
+    }
 }

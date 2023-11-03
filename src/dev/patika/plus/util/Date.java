@@ -1,5 +1,7 @@
 package dev.patika.plus.util;
 
+import javax.swing.*;
+
 public class Date {
     private int day;
     private int month;
@@ -37,6 +39,31 @@ public class Date {
                             "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
                             "21", "22", "23", "24", "25", "26", "27", "28", "29", "30",
                             "31"};
+    }
+
+    public static String[] getDays(String year, String month) {
+        return getDays(Integer.parseInt(year), Integer.parseInt(month));
+    }
+
+    public static String[] getDays(int year, int month) {
+        Month m = Month.values()[month - 1];
+        String[] days = new String[m.getDays(year)];
+        for (int i = 0; i < days.length; i++) days[i] = String.valueOf(i + 1);
+        return days;
+    }
+
+    /**
+     * Returns the dateified version of the given date that are found in separate three comboboxes.
+     * It simply merges the three comboboxes' selected items.
+     * @param yearJcb the combobox for year
+     * @param monthJcb the combobox for month
+     * @param dayJcb the combobox for day
+     * @return dateified version of the given date
+     */
+    public static String ify(JComboBox yearJcb, JComboBox monthJcb, JComboBox dayJcb) {
+        return yearJcb.getSelectedItem().toString() + "/" +
+                monthJcb.getSelectedItem().toString() + "/" +
+                dayJcb.getSelectedItem().toString();
     }
 
     public enum Month {
