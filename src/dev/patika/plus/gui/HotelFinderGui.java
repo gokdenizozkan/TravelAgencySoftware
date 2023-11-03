@@ -14,7 +14,7 @@ import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 
-public class RoomFinderGui extends JFrame {
+public class HotelFinderGui extends JFrame {
     private JPanel wrapper;
     private JPanel searchOptionsJp;
     private JComboBox provinceJcb;
@@ -39,7 +39,7 @@ public class RoomFinderGui extends JFrame {
     private JLabel dateOutJl;
     private DefaultTableModel hotelsTableModel;
 
-    public RoomFinderGui() {
+    public HotelFinderGui() {
         init();
         initFieldsAndFieldActions();
         initActions();
@@ -47,7 +47,7 @@ public class RoomFinderGui extends JFrame {
 
     private void init() {
         add(wrapper);
-        setTitle("Room Finder - " + Config.Gui.TITLE);
+        setTitle("Hotel Finder - " + Config.Gui.TITLE);
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -120,6 +120,6 @@ public class RoomFinderGui extends JFrame {
     }
 
     public static void main(String[] args) {
-        new RoomFinderGui();
+        new HotelFinderGui();
     }
 }
