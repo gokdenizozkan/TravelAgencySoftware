@@ -48,7 +48,7 @@ public class RoomAneGui extends JFrame {
     private void init() {
         add(wrapper);
         setTitle("Room Add and Edit Panel - " + Config.Gui.TITLE);
-        setSize(Config.Gui.WIDTH, Config.Gui.HEIGHT);
+        setSize(640, 480);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -62,11 +62,11 @@ public class RoomAneGui extends JFrame {
         }
 
         // season
-        seasonJcb.addItem("Select a season");
         ArrayList<Season> seasons = SeasonOperation.retrieveAll(hotelId);
         for (Season season : seasons) {
             seasonJcb.addItem(season.getName());
         }
+        seasonJcb.setSelectedIndex(-1);
         initSeasonActionListener(seasons);
 
         // board type
@@ -74,6 +74,7 @@ public class RoomAneGui extends JFrame {
         for (String facility : facilities.values()) {
             boardTypeJcb.addItem(facility);
         }
+        boardTypeJcb.setSelectedIndex(-1);
 
         // table
         Object[] headers = {"Age", "Price"};
@@ -83,7 +84,7 @@ public class RoomAneGui extends JFrame {
 
     private void initSeasonActionListener(ArrayList<Season> seasons) {
         seasonJcb.addItemListener(e -> {
-            Season season = seasons.get(seasonJcb.getSelectedIndex() - 1);
+            Season season = seasons.get(seasonJcb.getSelectedIndex());
             seasonJcb.putClientProperty("selectedItemId", season.getId());
         });
 
