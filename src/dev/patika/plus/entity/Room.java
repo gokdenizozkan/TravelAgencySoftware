@@ -5,6 +5,7 @@ import dev.patika.plus.quality.Stringifiable;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Room implements Parsable, Stringifiable {
     private int id;
@@ -27,9 +28,6 @@ public class Room implements Parsable, Stringifiable {
             this.stock = resultSet.getInt("stock");
             this.size = resultSet.getInt("size");
             this.facilities = resultSet.getString("facilities");
-            this.seasonId = resultSet.getInt("season_id");
-            this.priceAdult = resultSet.getInt("price_adult");
-            this.priceChild = resultSet.getInt("price_child");
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
@@ -43,9 +41,6 @@ public class Room implements Parsable, Stringifiable {
         this.stock = stock;
         this.size = size;
         this.facilities = facilities;
-        this.seasonId = seasonId;
-        this.priceAdult = priceAdult;
-        this.priceChild = priceChild;
     }
 
     public int getId() {
@@ -98,6 +93,15 @@ public class Room implements Parsable, Stringifiable {
 
     public String getFacilities() {
         return facilities;
+    }
+
+    public ArrayList<Integer> getFacilitiesAsList() {
+        ArrayList<Integer> parsedIds = new ArrayList<>();
+        String[] idArray = facilities.split(",");
+        for (String id : idArray) {
+            parsedIds.add(Integer.parseInt(id));
+        }
+        return parsedIds;
     }
 
     public void setFacilities(String facilities) {

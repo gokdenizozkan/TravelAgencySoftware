@@ -7,6 +7,7 @@ import dev.patika.plus.util.Util;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class RoomOperation {
     public static void add(Room room) {
@@ -37,7 +38,7 @@ public class RoomOperation {
     }
 
     private static void insert(Room room) {
-        String query = "INSERT INTO room (hotel_id, of_type, beds, stock, size, facilities, season_id, price_adult, price_child) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO room (hotel_id, of_type, beds, stock, size, facilities) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = Database.getConnection().prepareStatement(query);
@@ -47,9 +48,6 @@ public class RoomOperation {
             preparedStatement.setInt(4, room.getStock());
             preparedStatement.setInt(5, room.getSize());
             preparedStatement.setString(6, room.getFacilities());
-            preparedStatement.setInt(7, room.getSeasonId());
-            preparedStatement.setInt(8, room.getPriceAdult());
-            preparedStatement.setInt(9, room.getPriceChild());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -60,7 +58,7 @@ public class RoomOperation {
     }
 
     private static void update(Room room) {
-        String query = "UPDATE room SET hotel_id = ?, of_type = ?, beds = ?, stock = ?, size = ?, facilities = ?, season_id = ?, price_adult = ?, price_child = ? WHERE id = ?";
+        String query = "UPDATE room SET hotel_id = ?, of_type = ?, beds = ?, stock = ?, size = ?, facilities = ? WHERE id = ?";
         PreparedStatement preparedStatement = null;
 
         try {
@@ -71,10 +69,7 @@ public class RoomOperation {
             preparedStatement.setInt(4, room.getStock());
             preparedStatement.setInt(5, room.getSize());
             preparedStatement.setString(6, room.getFacilities());
-            preparedStatement.setInt(7, room.getSeasonId());
-            preparedStatement.setInt(8, room.getPriceAdult());
-            preparedStatement.setInt(9, room.getPriceChild());
-            preparedStatement.setInt(10, room.getId());
+            preparedStatement.setInt(7, room.getId());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -84,8 +79,89 @@ public class RoomOperation {
         }
     }
 
-    public static boolean isRoomAvailable(int hotelId) {
-        // TODO stock check by reservation table
-        return false;
+    public static Room retrieve(int roomId) {
+        String query = "SELECT * FROM room WHERE id = ? LIMIT 1";
+        Room room = null;
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = Database.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, roomId);
+
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                room = new Room(resultSet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Util.close(preparedStatement, resultSet);
+        }
+
+        return room;
+    }
+
+    /**
+     * Retrieves all rooms found in the given hotel (id).
+     * @param hotelId The id of the hotel.
+     * @return An ArrayList of Room objects.
+     */
+    public static ArrayList<Room> retrieveAll(int hotelId) {
+        String query = "SELECT * FROM room WHERE hotel_id = ?";
+        ArrayList<Room> rooms = new ArrayList<>();
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = Database.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, hotelId);
+
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                rooms.add(new Room(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Util.close(preparedStatement, resultSet);
+        }
+
+        return rooms;
+    }
+
+    /**
+     * Retrieves all rooms found in the given hotel (id).
+     * @param hotelId The id of the hotel.
+     * @return An ArrayList of Room objects.
+     */
+    public static ArrayList<Room> retrieveAvailables(int hotelId, String startDate, String endDate) {
+        String query = "SELECT * FROM room WHERE hotel_id = ?";
+        ArrayList<Room> rooms = new ArrayList<>();
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        boolean available = false;
+        try {
+            preparedStatement = Database.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, hotelId);
+
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Room room = new Room(resultSet);
+                available = RoomAvailabilityOperation.isAvailable(room.getId(), startDate, endDate);
+                if (available) rooms.add(room);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Util.close(preparedStatement, resultSet);
+        }
+
+        return rooms;
+    }
+
+    public static boolean isAvailable(int roomId, String startDate, String endDate) {
+        return RoomAvailabilityOperation.isAvailable(roomId, startDate, endDate);
     }
 }

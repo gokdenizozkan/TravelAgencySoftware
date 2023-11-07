@@ -30,11 +30,18 @@ public class PropertyOperation {
         } finally {
             Util.close(preparedStatement, resultSet);
         }
-
         return properties;
     }
 
-    public static String[] retrieveNames(String ofType) {
+    public static ArrayList<String> retrieveNames(String ids) {
+        ArrayList<Integer> idList = new ArrayList<>();
+        for (String id : ids.split(",")) {
+            idList.add(Integer.parseInt(id));
+        }
+        return retrieveNames(idList);
+    }
+
+    public static String[] retrieveAllNames(String ofType) {
         HashMap<Integer, String> properties = retrieveAll(ofType);
         String[] names = new String[properties.size()];
         int i = 0;

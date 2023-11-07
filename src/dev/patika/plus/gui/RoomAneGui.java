@@ -57,7 +57,7 @@ public class RoomAneGui extends JFrame {
 
     private void initFields() {
         // type
-        for (String type : PropertyOperation.retrieveNames("room_type")) {
+        for (String type : PropertyOperation.retrieveAllNames("room_type")) {
             ofTypeJcb.addItem(type);
         }
 
@@ -84,9 +84,7 @@ public class RoomAneGui extends JFrame {
     }
 
     private void initActions() {
-        facilitiesJb.addActionListener(e -> {
-            new PropertyAneGui(facilitiesJtf, "room_facility");
-        });
+        facilitiesJb.addActionListener(e -> new PropertyAneGui(facilitiesJtf, "room_facility"));
 
         submitJb.addActionListener(e -> {
             String ofType = (String) ofTypeJcb.getSelectedItem();
@@ -109,7 +107,7 @@ public class RoomAneGui extends JFrame {
 
     private void loadPricing() {
         pricingTableModel.setRowCount(0);
-        for (String ageClassifier : PropertyOperation.retrieveNames("age_classifier")) {
+        for (String ageClassifier : PropertyOperation.retrieveAllNames("age_classifier")) {
             pricingTableModel.addRow(new Object[]{ageClassifier, 0});
         }
     }
