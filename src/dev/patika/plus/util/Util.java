@@ -1,7 +1,12 @@
 package dev.patika.plus.util;
 
+import dev.patika.plus.essential.Database;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Util {
     // GUI
