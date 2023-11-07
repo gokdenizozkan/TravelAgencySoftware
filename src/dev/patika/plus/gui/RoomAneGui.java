@@ -70,9 +70,9 @@ public class RoomAneGui extends JFrame {
         initSeasonActionListener(seasons);
 
         // board type
-        HashMap<Integer, String> facilities = HotelOperation.retrieveFacilities(hotelId);
-        for (String facility : facilities.values()) {
-            boardTypeJcb.addItem(facility);
+        HashMap<Integer, String> boardTypes = HotelOperation.retrieveBoardTypes(hotelId);
+        for (String boardType : boardTypes.values()) {
+            boardTypeJcb.addItem(boardType);
         }
         boardTypeJcb.setSelectedIndex(-1);
 
@@ -115,7 +115,7 @@ public class RoomAneGui extends JFrame {
             int seasonId = (int) seasonJcb.getClientProperty("selectedItemId");
 
             String selectedBoardType = (String) boardTypeJcb.getSelectedItem();
-            int boardTypeId = HotelOperation.retrieveFacilitiesReversed(hotelId).get(selectedBoardType);
+            int boardTypeId = HotelOperation.retrieveBoardTypesReversed(hotelId).get(selectedBoardType);
 
             PricingOperation.add(room.getId(), seasonId, boardTypeId, pricing.get("Adult"), pricing.get("Child"));
         });

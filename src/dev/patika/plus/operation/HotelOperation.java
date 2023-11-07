@@ -234,5 +234,31 @@ public class HotelOperation {
         return facilities;
     }
 
+    public static HashMap<Integer, String> retrieveBoardTypes(int hotelId) {
+        Hotel hotel = retrieve(hotelId);
+
+        ArrayList<Integer> ids = hotel.getBoardTypesParsed();
+        ArrayList<String> names = PropertyOperation.retrieveNames(ids);
+
+        HashMap<Integer, String> facilities = new HashMap<>();
+        for (int i = 0; i < ids.size(); i++) {
+            facilities.put(ids.get(i), names.get(i));
+        }
+        return facilities;
+    }
+
+    public static HashMap<String, Integer> retrieveBoardTypesReversed(int hotelId) {
+        Hotel hotel = retrieve(hotelId);
+
+        ArrayList<Integer> ids = hotel.getBoardTypesParsed();
+        ArrayList<String> names = PropertyOperation.retrieveNames(ids);
+
+        HashMap<String, Integer> facilities = new HashMap<>();
+        for (int i = 0; i < ids.size(); i++) {
+            facilities.put(names.get(i), ids.get(i));
+        }
+        return facilities;
+    }
+
 
 }

@@ -139,6 +139,10 @@ public class Hotel implements Stringifiable, Parsable {
         return boardTypes;
     }
 
+    public ArrayList<Integer> getBoardTypesParsed() {
+        return parseIntegerList(boardTypes, ",");
+    }
+
     public void setBoardTypes(String boardTypes) {
         this.boardTypes = boardTypes;
     }
