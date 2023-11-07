@@ -87,7 +87,7 @@ public class RoomSelectorGui extends JFrame {
 
             Reservation reservation = reservationIn.withRoomId(roomId);
             reservation = reservation.withTotalPrice(totalPrice);
-            new ReservationGui(reservation);
+            new ReservationSummaryGui(reservation);
         });
 
         roomsJt.addMouseListener(new MouseAdapter() {

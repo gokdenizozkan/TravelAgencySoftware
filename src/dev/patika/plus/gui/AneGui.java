@@ -1,4 +1,4 @@
 package dev.patika.plus.gui;
 
-public class ReservationGui {
+public class AneGui {
 }
