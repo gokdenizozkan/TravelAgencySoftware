@@ -3,7 +3,7 @@ package dev.patika.plus.gui;
 import dev.patika.plus.entity.Hotel;
 import dev.patika.plus.essential.Config;
 import dev.patika.plus.operation.HotelOperation;
-import dev.patika.plus.operation.RoomAvailabilityOperation;
+import dev.patika.plus.operation.RoomOperation;
 import dev.patika.plus.util.Date;
 
 import javax.swing.JFrame;
@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JButton;
+import javax.swing.JSpinner;
 import javax.swing.table.DefaultTableModel;
 
 public class HotelFinderGui extends JFrame {
@@ -38,6 +39,11 @@ public class HotelFinderGui extends JFrame {
     private JButton findJb;
     private JLabel dateInJl;
     private JLabel dateOutJl;
+    private JPanel guestsJp;
+    private JLabel adultJl;
+    private JSpinner adultJs;
+    private JLabel childJl;
+    private JSpinner childJs;
     private DefaultTableModel hotelsTableModel;
 
     public HotelFinderGui() {
@@ -109,7 +115,7 @@ public class HotelFinderGui extends JFrame {
                 // stock check by RoomOpearion.isRoomAvailable
                 // if not available, continue
                 // if available, add to table
-                boolean available = RoomAvailabilityOperation.isAvailable(hotel.getId(), checkInDate, checkOutDate);
+                boolean available = RoomOperation.isAvailable(hotel.getId(), checkInDate, checkOutDate);
                 if (!available) continue;
 
                 hotelsTableModel.addRow(new Object[]{
