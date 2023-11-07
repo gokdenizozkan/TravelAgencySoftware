@@ -1,4 +1,4 @@
-package dev.patika.plus.util;
+package dev.patika.plus.entity;
 
 public class Reservation {
     private int id;

@@ -3,7 +3,7 @@ package dev.patika.plus.operation;
 import dev.patika.plus.entity.Pricing;
 import dev.patika.plus.entity.Season;
 import dev.patika.plus.essential.Database;
-import dev.patika.plus.util.Reservation;
+import dev.patika.plus.entity.Reservation;
 import dev.patika.plus.util.Util;
 
 import java.sql.PreparedStatement;

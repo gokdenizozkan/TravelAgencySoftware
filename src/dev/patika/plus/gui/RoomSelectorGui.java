@@ -6,7 +6,7 @@ import dev.patika.plus.operation.PricingOperation;
 import dev.patika.plus.operation.PropertyOperation;
 import dev.patika.plus.operation.RoomOperation;
 import dev.patika.plus.util.Html;
-import dev.patika.plus.util.Reservation;
+import dev.patika.plus.entity.Reservation;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

@@ -1,7 +1,7 @@
 package dev.patika.plus.operation;
 
 import dev.patika.plus.essential.Database;
-import dev.patika.plus.util.Reservation;
+import dev.patika.plus.entity.Reservation;
 import dev.patika.plus.util.Util;
 
 import java.sql.PreparedStatement;
@@ -31,5 +31,19 @@ public class ReservationOperation {
             Util.close(preparedStatement);
         }
 
+    }
+
+    public static void delete(int id) {
+        String query = "DELETE FROM reservation WHERE id = ?";
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = Database.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } finally {
+            Util.close(preparedStatement);
+        }
     }
 }

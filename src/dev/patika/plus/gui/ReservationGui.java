@@ -5,7 +5,7 @@ import dev.patika.plus.entity.Room;
 import dev.patika.plus.essential.Config;
 import dev.patika.plus.operation.*;
 import dev.patika.plus.util.Html;
-import dev.patika.plus.util.Reservation;
+import dev.patika.plus.entity.Reservation;
 
 import javax.swing.*;
 
