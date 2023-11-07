@@ -49,7 +49,10 @@ public class Date {
     public static String[] getDays(int year, int month) {
         Month m = Month.values()[month - 1];
         String[] days = new String[m.getDays(year)];
-        for (int i = 0; i < days.length; i++) days[i] = String.valueOf(i + 1);
+        for (int i = 0; i < days.length; i++) {
+            if (i < 10) days[i] = "0" + (i + 1);
+            else days[i] = String.valueOf(i + 1);
+        }
         return days;
     }
 
