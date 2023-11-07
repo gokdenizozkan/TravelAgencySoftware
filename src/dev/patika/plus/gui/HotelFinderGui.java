@@ -1,6 +1,7 @@
 package dev.patika.plus.gui;
 
 import dev.patika.plus.entity.Hotel;
+import dev.patika.plus.entity.Reservation;
 import dev.patika.plus.essential.Config;
 import dev.patika.plus.operation.HotelOperation;
 import dev.patika.plus.operation.RoomOperation;
@@ -15,6 +16,8 @@ import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JSpinner;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class HotelFinderGui extends JFrame {
     private JPanel wrapper;
@@ -85,6 +88,7 @@ public class HotelFinderGui extends JFrame {
         Object[] headers = {"ID", "Name", "Province", "State", "Address", "Phone"};
         hotelsTableModel = new DefaultTableModel(headers, 0);
         hotelsJt.setModel(hotelsTableModel);
+        hotelsJt.setDefaultEditor(Object.class, null);
     }
 
     private void readyDatePicker(JComboBox yearJcb, JComboBox monthJcb, JComboBox dayJcb) {
@@ -128,9 +132,23 @@ public class HotelFinderGui extends JFrame {
                 });
             }
         });
-    }
-
-    public static void main(String[] args) {
-        new HotelFinderGui();
+        hotelsJt.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // double click
+                if (e.getClickCount() == 2) {
+                    int row = hotelsJt.getSelectedRow();
+                    if (row == -1) return;
+                    int hotelId = Integer.parseInt(hotelsJt.getValueAt(row, 0).toString());
+                    Reservation reservation = Reservation.reserve()
+                            .withHotelId(hotelId)
+                            .withAdultGuestCount((int) adultJs.getValue())
+                            .withChildGuestCount((int) childJs.getValue())
+                            .withStartDate(Date.ify(checkInYearJcb, checkInMonthJcb, checkInDayJcb))
+                            .withEndDate(Date.ify(checkOutYearJcb, checkOutMonthJcb, checkOutDayJcb));
+                    new RoomSelectorGui(reservation);
+                }
+            }
+        });
     }
 }

@@ -1,7 +1,9 @@
 package dev.patika.plus.gui;
 
 import dev.patika.plus.essential.Config;
+import dev.patika.plus.operation.HotelOperation;
 import dev.patika.plus.operation.ReservationOperation;
+import dev.patika.plus.operation.RoomOperation;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -23,6 +25,8 @@ public class ListReservationsGui extends JFrame {
     public ListReservationsGui() {
         init();
         initFields();
+        initActions();
+        loadReservations();
     }
 
     private void init() {
@@ -37,8 +41,8 @@ public class ListReservationsGui extends JFrame {
     private void initFields() {
         // table
         Object[] headers = {"Id", "Contact Name", "Contact Phone Number", "Contact Email",
-                "Hotel Name", "Hotel Address", "Hotel Phone Number", "Room Number", "Room Type",
-                "Room Capacity", "Room Price", "Check In Date", "Check Out Date"};
+                "Hotel Name", "Hotel Address", "Hotel Phone Number", "Room Id", "Room Type",
+                "Beds", "Total Price", "Check In Date", "Check Out Date"};
         reservationsTableModel = new DefaultTableModel(headers, 0);
         reservationsJt.setModel(reservationsTableModel);
 
@@ -55,6 +59,27 @@ public class ListReservationsGui extends JFrame {
             int id = Integer.parseInt(reservationsTableModel.getValueAt(selectedRow, 0).toString());
             ReservationOperation.delete(id);
             reservationsTableModel.removeRow(selectedRow);
+        });
+    }
+
+    private void loadReservations() {
+        reservationsTableModel.setRowCount(0);
+        ReservationOperation.retrieveAll().forEach(reservation -> {
+            reservationsTableModel.addRow(new Object[]{
+                    reservation.getId(),
+                    reservation.getContactName(),
+                    reservation.getContactPhoneNumber(),
+                    reservation.getContactEmail(),
+                    HotelOperation.retrieve(reservation.getHotelId()).getName(),
+                    HotelOperation.retrieve(reservation.getHotelId()).getAddress(),
+                    HotelOperation.retrieve(reservation.getHotelId()).getPhoneNumber(),
+                    reservation.getRoomId(),
+                    RoomOperation.retrieve(reservation.getRoomId()).getOfType(),
+                    RoomOperation.retrieve(reservation.getRoomId()).getBeds(),
+                    reservation.getTotalPrice(),
+                    reservation.getStartDate(),
+                    reservation.getEndDate()
+            });
         });
     }
 

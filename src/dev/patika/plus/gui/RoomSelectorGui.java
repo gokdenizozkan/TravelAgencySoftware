@@ -1,7 +1,9 @@
 package dev.patika.plus.gui;
 
+import dev.patika.plus.entity.Hotel;
 import dev.patika.plus.entity.Room;
 import dev.patika.plus.essential.Config;
+import dev.patika.plus.operation.HotelOperation;
 import dev.patika.plus.operation.PricingOperation;
 import dev.patika.plus.operation.PropertyOperation;
 import dev.patika.plus.operation.RoomOperation;
@@ -12,6 +14,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RoomSelectorGui extends JFrame {
     private JPanel wrapper;
@@ -24,12 +28,15 @@ public class RoomSelectorGui extends JFrame {
     private JPanel roomJp;
     private JEditorPane roomJep;
     private JLabel priceInNumberJl;
+    private JPanel roomOptionsJp;
+    private JComboBox boardTypeJcb;
+    private JLabel boardTypeJl;
 
     private int hotelId;
     private DefaultTableModel roomsTableModel;
     private String startDate;
     private String endDate;
-    private Reservation reservationIn;
+    private Reservation reservation;
     private String html =
             Html.form()
             .addHeading("Room Details", 1)
@@ -42,11 +49,11 @@ public class RoomSelectorGui extends JFrame {
             .toString();
 
 
-    public RoomSelectorGui(Reservation reservationIn) {
-        this.reservationIn = reservationIn;
-        this.hotelId = reservationIn.getHotelId();
-        this.startDate = reservationIn.getStartDate();
-        this.endDate = reservationIn.getEndDate();
+    public RoomSelectorGui(Reservation reservation) {
+        this.reservation = reservation;
+        this.hotelId = reservation.getHotelId();
+        this.startDate = reservation.getStartDate();
+        this.endDate = reservation.getEndDate();
 
         init();
         initFields();
@@ -76,26 +83,39 @@ public class RoomSelectorGui extends JFrame {
                     room.getSize(),
             });
         }
+
+        // board type
+        HashMap<Integer, String> boardTypesMap = HotelOperation.retrieveBoardTypes(hotelId);
+        boardTypesMap.values().forEach(boardTypeJcb::addItem);
+        boardTypeJcb.setSelectedIndex(-1);
     }
 
     private void initActions() {
+        // board type combobox
+        boardTypeJcb.addActionListener(e -> {
+            HashMap<String, Integer> boardTypesMapReversed = HotelOperation.retrieveBoardTypesReversed(hotelId);
+            String selectedBoardType = boardTypeJcb.getSelectedItem().toString();
+            int boardTypeId = boardTypesMapReversed.get(selectedBoardType);
+            reservation.setBoardTypeId(boardTypeId);
+        });
+
         // reserve
         proceedJb.addActionListener(e -> {
             int row = roomsJt.getSelectedRow();
             int roomId = (int) roomsJt.getModel().getValueAt(row, 0);
             int totalPrice = Integer.parseInt(priceInNumberJl.getText());
 
-            Reservation reservation = reservationIn.withRoomId(roomId);
-            reservation = reservation.withTotalPrice(totalPrice);
+            reservation.setRoomId(roomId);
+            reservation.setTotalPrice(totalPrice);
             new ReservationSummaryGui(reservation);
         });
 
+        // table
         roomsJt.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 int row = roomsJt.getSelectedRow();
                 int roomId = (int) roomsJt.getModel().getValueAt(row, 0);
-
 
                 // Room JEditorPane
                 roomJep.setEditable(false);
@@ -109,20 +129,10 @@ public class RoomSelectorGui extends JFrame {
                 ));
 
                 // pricing
-                Reservation reservation = reservationIn.withRoomId(roomId);
+                reservation.setRoomId(roomId);
                 int price = PricingOperation.calculatePrice(reservation);
                 priceInNumberJl.setText(String.valueOf(price));
             }
         });
-    }
-
-    public static void main(String[] args) {
-        new RoomSelectorGui(Reservation.reserve()
-                .withHotelId(1)
-                .withStartDate("2024-01-01")
-                .withEndDate("2024-01-02")
-                .withAdultGuestCount(1)
-                .withChildGuestCount(1)
-        );
     }
 }

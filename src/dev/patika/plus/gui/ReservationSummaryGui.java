@@ -99,7 +99,7 @@ public class ReservationSummaryGui extends JFrame {
     }
 
     public static void main(String[] args) {
-        new ReservationSummaryGui(new Reservation()
+        new ReservationSummaryGui(Reservation.reserve()
                 .withHotelId(1)
                 .withRoomId(3)
                 .withBoardTypeId(1)

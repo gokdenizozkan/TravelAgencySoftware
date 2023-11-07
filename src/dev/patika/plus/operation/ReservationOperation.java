@@ -5,7 +5,9 @@ import dev.patika.plus.entity.Reservation;
 import dev.patika.plus.util.Util;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ReservationOperation {
     public static void add(Reservation reservation) {
@@ -45,5 +47,22 @@ public class ReservationOperation {
         } finally {
             Util.close(preparedStatement);
         }
+    }
+
+    public static ArrayList<Reservation> retrieveAll() {
+        String query = "SELECT * FROM reservation";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        ArrayList<Reservation> reservations = new ArrayList<>();
+        try {
+            preparedStatement = Database.getConnection().prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) reservations.add(new Reservation(resultSet));
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } finally {
+            Util.close(preparedStatement);
+        }
+        return reservations;
     }
 }

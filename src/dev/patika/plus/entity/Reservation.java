@@ -1,5 +1,9 @@
 package dev.patika.plus.entity;
 
+import dev.patika.plus.util.Util;
+
+import java.sql.ResultSet;
+
 public class Reservation {
     private int id;
     private int hotelId;
@@ -13,6 +17,28 @@ public class Reservation {
     private String contactName;
     private String contactPhoneNumber;
     private String contactEmail;
+
+    private Reservation() {
+    }
+
+    public Reservation(ResultSet resultSet) {
+        try {
+            this.id = resultSet.getInt("id");
+            this.hotelId = resultSet.getInt("hotel_id");
+            this.roomId = resultSet.getInt("room_id");
+            this.boardTypeId = resultSet.getInt("board_type_id");
+            this.startDate = resultSet.getString("start_date");
+            this.endDate = resultSet.getString("end_date");
+            this.adultGuestCount = resultSet.getInt("adult_guest_count");
+            this.childGuestCount = resultSet.getInt("child_guest_count");
+            this.totalPrice = resultSet.getInt("total_price");
+            this.contactName = resultSet.getString("contact_name");
+            this.contactPhoneNumber = resultSet.getString("contact_phone_number");
+            this.contactEmail = resultSet.getString("contact_email");
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
 
     public static Reservation reserve() {
         return new Reservation();

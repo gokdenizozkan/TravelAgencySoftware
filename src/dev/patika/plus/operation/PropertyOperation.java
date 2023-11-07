@@ -1,5 +1,6 @@
 package dev.patika.plus.operation;
 
+import dev.patika.plus.entity.Hotel;
 import dev.patika.plus.entity.Property;
 import dev.patika.plus.essential.Database;
 import dev.patika.plus.util.Util;

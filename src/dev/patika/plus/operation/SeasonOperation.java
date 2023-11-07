@@ -138,12 +138,7 @@ public class SeasonOperation {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-                if (resultSet != null) resultSet.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Util.close(preparedStatement, resultSet);
         }
         return season;
     }
