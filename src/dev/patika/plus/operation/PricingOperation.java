@@ -32,8 +32,8 @@ public class PricingOperation {
         }
     }
 
-    public static Pricing retrieve(int roomId, int seasonId) {
-        String query = "SELECT * FROM pricing WHERE room_id = ? AND season_id = ?";
+    public static Pricing retrieve(int roomId, int seasonId, int boardTypeId) {
+        String query = "SELECT * FROM pricing WHERE room_id = ? AND season_id = ? AND board_type_id = ?";
         Pricing pricing = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -41,6 +41,7 @@ public class PricingOperation {
             preparedStatement = Database.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, roomId);
             preparedStatement.setInt(2, seasonId);
+            preparedStatement.setInt(3, boardTypeId);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) pricing = new Pricing(resultSet);
         } catch (SQLException exception) {
@@ -78,10 +79,19 @@ public class PricingOperation {
 
         AtomicInteger price = new AtomicInteger();
         start.datesUntil(end).forEach(date -> {
-            Season season = SeasonOperation.retrieve(reservation.getHotelId(), date.toString());
-            Pricing pricing = PricingOperation.retrieve(reservation.getRoomId(), season.getId());
-            int adultPrice = pricing.getPriceAdult() * reservation.getAdultGuestCount();
-            int childPrice = pricing.getPriceChild() * reservation.getChildGuestCount();
+            int hotelId = reservation.getHotelId();
+            int roomId = reservation.getRoomId();
+            int boardTypeId = reservation.getBoardTypeId();
+            int adultGuestCount = reservation.getAdultGuestCount();
+            int childGuestCount = reservation.getChildGuestCount();
+
+            Season season = SeasonOperation.retrieve(hotelId, date.toString());
+            int seasonId = season.getId();
+
+            Pricing pricing = PricingOperation.retrieve(roomId, seasonId, boardTypeId);
+            int adultPrice = pricing.getPriceAdult() * adultGuestCount;
+            int childPrice = pricing.getPriceChild() * childGuestCount;
+
             price.addAndGet(adultPrice + childPrice);
         });
         return price.get();

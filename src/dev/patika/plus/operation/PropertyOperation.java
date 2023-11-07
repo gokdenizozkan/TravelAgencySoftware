@@ -11,6 +11,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PropertyOperation {
+    public static Property retrieve(int id) {
+        String query = "SELECT * FROM property WHERE id = ?";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Property property = null;
+        try {
+            preparedStatement = Database.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next())
+                property = new Property(resultSet);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } finally {
+            Util.close(preparedStatement, resultSet);
+        }
+        return property;
+    }
+
     public static ArrayList<String> retrieveNames(ArrayList<Integer> ids) {
         ArrayList<String> properties = new ArrayList<>();
 
