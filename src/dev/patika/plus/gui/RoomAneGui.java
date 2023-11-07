@@ -3,9 +3,7 @@ package dev.patika.plus.gui;
 import dev.patika.plus.entity.Room;
 import dev.patika.plus.entity.Season;
 import dev.patika.plus.essential.Config;
-import dev.patika.plus.operation.PropertyOperation;
-import dev.patika.plus.operation.RoomOperation;
-import dev.patika.plus.operation.SeasonOperation;
+import dev.patika.plus.operation.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -33,6 +31,8 @@ public class RoomAneGui extends JFrame {
     private JButton submitJb;
     private JComboBox seasonJcb;
     private JLabel seasonJl;
+    private JComboBox boardTypeJcb;
+    private JLabel boardTypeJl;
     private DefaultTableModel pricingTableModel;
     private int hotelId;
 
@@ -69,6 +69,12 @@ public class RoomAneGui extends JFrame {
         }
         initSeasonActionListener(seasons);
 
+        // board type
+        HashMap<Integer, String> facilities = HotelOperation.retrieveFacilities(hotelId);
+        for (String facility : facilities.values()) {
+            boardTypeJcb.addItem(facility);
+        }
+
         // table
         Object[] headers = {"Age", "Price"};
         pricingTableModel = new DefaultTableModel(headers, 0);
@@ -87,21 +93,30 @@ public class RoomAneGui extends JFrame {
         facilitiesJb.addActionListener(e -> new PropertyAneGui(facilitiesJtf, "room_facility"));
 
         submitJb.addActionListener(e -> {
+            // room add
             String ofType = (String) ofTypeJcb.getSelectedItem();
             int beds = (int) bedsJs.getValue();
             int stock = (int) stockJs.getValue();
             int size = Integer.parseInt(sizeJtf.getText());
             String facilities = facilitiesJtf.getClientProperty("representativeIds").toString();
+            Room room = new Room(hotelId, ofType, beds, stock, size, facilities);
+            RoomOperation.add(room);
+
+            // pricing add
             HashMap<String, Integer> pricing = new HashMap<>();
             for (int i = 0; i < pricingTableModel.getRowCount(); i++) {
-                pricing.put(pricingTableModel.getValueAt(i, 0).toString(),
-                        Integer.parseInt(pricingTableModel.getValueAt(i, 1).toString()));
+                String age = pricingTableModel.getValueAt(i, 0).toString();
+                int price = Integer.parseInt(pricingTableModel.getValueAt(i, 1).toString());
+
+                pricing.put(age, price);
             }
+
             int seasonId = (int) seasonJcb.getClientProperty("selectedItemId");
 
-            Room room = new Room(hotelId, ofType, beds, stock, size, facilities, seasonId, pricing.get("Adult"),
-                    pricing.get("Child"));
-            RoomOperation.add(room);
+            String selectedBoardType = (String) boardTypeJcb.getSelectedItem();
+            int boardTypeId = HotelOperation.retrieveFacilitiesReversed(hotelId).get(selectedBoardType);
+
+            PricingOperation.add(room.getId(), seasonId, boardTypeId, pricing.get("Adult"), pricing.get("Child"));
         });
     }
 
@@ -110,5 +125,9 @@ public class RoomAneGui extends JFrame {
         for (String ageClassifier : PropertyOperation.retrieveAllNames("age_classifier")) {
             pricingTableModel.addRow(new Object[]{ageClassifier, 0});
         }
+    }
+
+    public static void main(String[] args) {
+        new RoomAneGui(1);
     }
 }

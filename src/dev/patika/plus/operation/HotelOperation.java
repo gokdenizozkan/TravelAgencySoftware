@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HotelOperation {
     public static void add(Hotel hotel) {
@@ -205,6 +206,32 @@ public class HotelOperation {
             Util.close(preparedStatement, resultSet);
         }
         return hotels.toArray(new Hotel[0]);
+    }
+
+    public static HashMap<Integer, String> retrieveFacilities(int hotelId) {
+        Hotel hotel = retrieve(hotelId);
+
+        ArrayList<Integer> ids = hotel.getFacilitiesParsed();
+        ArrayList<String> names = PropertyOperation.retrieveNames(ids);
+
+        HashMap<Integer, String> facilities = new HashMap<>();
+        for (int i = 0; i < ids.size(); i++) {
+            facilities.put(ids.get(i), names.get(i));
+        }
+        return facilities;
+    }
+
+    public static HashMap<String, Integer> retrieveFacilitiesReversed(int hotelId) {
+        Hotel hotel = retrieve(hotelId);
+
+        ArrayList<Integer> ids = hotel.getFacilitiesParsed();
+        ArrayList<String> names = PropertyOperation.retrieveNames(ids);
+
+        HashMap<String, Integer> facilities = new HashMap<>();
+        for (int i = 0; i < ids.size(); i++) {
+            facilities.put(names.get(i), ids.get(i));
+        }
+        return facilities;
     }
 
 

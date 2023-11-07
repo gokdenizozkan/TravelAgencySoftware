@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 public class Pricing {
     private int roomId;
     private int seasonId;
+    private int boardTypeId;
     private int priceAdult;
     private int priceChild;
 
@@ -12,6 +13,7 @@ public class Pricing {
         try {
             roomId = resultSet.getInt("room_id");
             seasonId = resultSet.getInt("season_id");
+            boardTypeId = resultSet.getInt("board_type_id");
             priceAdult = resultSet.getInt("price_adult");
             priceChild = resultSet.getInt("price_child");
         } catch (Exception e) {

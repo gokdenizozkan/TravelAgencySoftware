@@ -21,7 +21,8 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Label"/>
+              <labelFor value="2059e"/>
+              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.room-ane.room-type"/>
             </properties>
           </component>
           <component id="2059e" class="javax.swing.JComboBox" binding="ofTypeJcb">
@@ -35,7 +36,8 @@
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Label"/>
+              <labelFor value="9a37f"/>
+              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.room-ane.bed-count"/>
             </properties>
           </component>
           <component id="9a37f" class="javax.swing.JSpinner" binding="bedsJs">
@@ -49,7 +51,8 @@
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Label"/>
+              <labelFor value="3a6e8"/>
+              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.room-ane.total-room-amount"/>
             </properties>
           </component>
           <component id="3a6e8" class="javax.swing.JSpinner" binding="stockJs">
@@ -63,7 +66,8 @@
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Label"/>
+              <labelFor value="660f6"/>
+              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.room-ane.size"/>
             </properties>
           </component>
           <component id="660f6" class="javax.swing.JTextField" binding="sizeJtf">
@@ -107,12 +111,13 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Label"/>
+              <labelFor value="9cd18"/>
+              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.room-ane.facilities"/>
             </properties>
           </component>
         </children>
       </grid>
-      <grid id="ef351" binding="pricingJp" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="ef351" binding="pricingJp" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -122,7 +127,7 @@
         <children>
           <scrollpane id="bed47" binding="pricingJsp">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -135,7 +140,7 @@
           </scrollpane>
           <vspacer id="a54a0">
             <constraints>
-              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+              <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
             </constraints>
           </vspacer>
           <component id="3fb35" class="javax.swing.JLabel" binding="seasonJl">
@@ -143,12 +148,26 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Label"/>
+              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.room-ane.season"/>
             </properties>
           </component>
           <component id="8bd2" class="javax.swing.JComboBox" binding="seasonJcb">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="54f3c" class="javax.swing.JLabel" binding="boardTypeJl">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.room-ane.board-type"/>
+            </properties>
+          </component>
+          <component id="c1bd6" class="javax.swing.JComboBox" binding="boardTypeJcb">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
           </component>

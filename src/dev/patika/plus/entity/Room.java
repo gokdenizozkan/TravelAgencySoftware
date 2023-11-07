@@ -33,8 +33,7 @@ public class Room implements Parsable, Stringifiable {
         }
     }
 
-    public Room(int hottelId, String ofType, int beds, int stock, int size, String facilities, int seasonId,
-                int priceAdult, int priceChild) {
+    public Room(int hottelId, String ofType, int beds, int stock, int size, String facilities) {
         this.hotelId = hottelId;
         this.ofType = ofType;
         this.beds = beds;

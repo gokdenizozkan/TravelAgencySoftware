@@ -14,6 +14,24 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class PricingOperation {
+    public static void add(int roomId, int seasonId, int boardTypeId, int priceAdult, int priceChild) {
+        String query = "INSERT INTO pricing (room_id, season_id, board_type_id, price_adult, price_child) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = Database.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, roomId);
+            preparedStatement.setInt(2, seasonId);
+            preparedStatement.setInt(3, boardTypeId);
+            preparedStatement.setInt(4, priceAdult);
+            preparedStatement.setInt(5, priceChild);
+            preparedStatement.executeUpdate();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } finally {
+            Util.close(preparedStatement);
+        }
+    }
+
     public static Pricing retrieve(int roomId, int seasonId) {
         String query = "SELECT * FROM pricing WHERE room_id = ? AND season_id = ?";
         Pricing pricing = null;
