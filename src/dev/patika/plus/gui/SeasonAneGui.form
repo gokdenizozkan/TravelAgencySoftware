@@ -26,7 +26,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.season.add-and-edit.gui-panel-label"/>
+              <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="gui.season.add-and-edit.gui-panel-label"/>
             </properties>
           </component>
           <grid id="855ec" binding="fieldsJp" layout-manager="GridLayoutManager" row-count="4" column-count="10" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -50,7 +50,7 @@
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.season.add-and-edit.label-1"/>
+                      <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="gui.season.add-and-edit.label-1"/>
                     </properties>
                   </component>
                   <component id="b72f7" class="javax.swing.JTextField" binding="nameJtf">
@@ -76,7 +76,7 @@
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.season.add-and-edit.label-2"/>
+                      <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="gui.season.add-and-edit.label-2"/>
                     </properties>
                   </component>
                   <grid id="dba23" binding="startJp" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -128,7 +128,7 @@
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.season.add-and-edit.label-3"/>
+                      <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="gui.season.add-and-edit.label-3"/>
                     </properties>
                   </component>
                   <grid id="51b88" binding="endJp" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -176,7 +176,7 @@
                   <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="general.action.add"/>
+                  <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="general.action.add"/>
                 </properties>
               </component>
               <component id="1881f" class="javax.swing.JButton" binding="updateJb">
@@ -184,7 +184,7 @@
                   <grid row="3" column="9" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="general.action.update"/>
+                  <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="general.action.update"/>
                 </properties>
                 <clientProperties>
                   <id class="java.lang.Integer" value="-1"/>
@@ -195,7 +195,7 @@
                   <grid row="3" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="general.action.delete"/>
+                  <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="general.action.delete"/>
                 </properties>
               </component>
             </children>

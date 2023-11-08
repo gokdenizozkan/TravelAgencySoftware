@@ -40,7 +40,7 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="entity.general.name"/>
+                  <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="entity.general.name"/>
                 </properties>
               </component>
               <component id="6f3" class="javax.swing.JTextField" binding="contactNameJtf">
@@ -56,7 +56,7 @@
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="entity.general.phone"/>
+                  <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="entity.general.phone"/>
                 </properties>
               </component>
               <component id="9c303" class="javax.swing.JTextField" binding="contactPhoneNumberJtf">
@@ -72,7 +72,7 @@
                   <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="entity.general.email"/>
+                  <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="entity.general.email"/>
                 </properties>
               </component>
               <component id="d60ce" class="javax.swing.JTextField" binding="contactEmailJtf">
@@ -90,7 +90,7 @@
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.reservation.reserve-button"/>
+              <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="gui.reservation.reserve-button"/>
             </properties>
           </component>
           <vspacer id="4124a">

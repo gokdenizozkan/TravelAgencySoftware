@@ -22,7 +22,7 @@
             </constraints>
             <properties>
               <labelFor value="2059e"/>
-              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.room-ane.room-type"/>
+              <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="gui.room-ane.room-type"/>
             </properties>
           </component>
           <component id="2059e" class="javax.swing.JComboBox" binding="ofTypeJcb">
@@ -37,7 +37,7 @@
             </constraints>
             <properties>
               <labelFor value="9a37f"/>
-              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.room-ane.bed-count"/>
+              <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="gui.room-ane.bed-count"/>
             </properties>
           </component>
           <component id="9a37f" class="javax.swing.JSpinner" binding="bedsJs">
@@ -52,7 +52,7 @@
             </constraints>
             <properties>
               <labelFor value="3a6e8"/>
-              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.room-ane.total-room-amount"/>
+              <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="gui.room-ane.total-room-amount"/>
             </properties>
           </component>
           <component id="3a6e8" class="javax.swing.JSpinner" binding="stockJs">
@@ -67,7 +67,7 @@
             </constraints>
             <properties>
               <labelFor value="660f6"/>
-              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.room-ane.size"/>
+              <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="gui.room-ane.size"/>
             </properties>
           </component>
           <component id="660f6" class="javax.swing.JTextField" binding="sizeJtf">
@@ -123,7 +123,7 @@
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="general.action.edit"/>
+              <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="general.action.edit"/>
             </properties>
           </component>
           <component id="d0476" class="javax.swing.JLabel" binding="facilitiesJl">
@@ -132,7 +132,7 @@
             </constraints>
             <properties>
               <labelFor value="9cd18"/>
-              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.room-ane.facilities"/>
+              <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="gui.room-ane.facilities"/>
             </properties>
           </component>
           <hspacer id="4d462">
@@ -173,7 +173,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.room-ane.season"/>
+              <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="gui.room-ane.season"/>
             </properties>
           </component>
           <component id="8bd2" class="javax.swing.JComboBox" binding="seasonJcb">
@@ -187,7 +187,7 @@
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.room-ane.board-type"/>
+              <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="gui.room-ane.board-type"/>
             </properties>
           </component>
           <component id="c1bd6" class="javax.swing.JComboBox" binding="boardTypeJcb">
@@ -213,7 +213,7 @@
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="general.action.submit"/>
+          <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="general.action.submit"/>
         </properties>
       </component>
     </children>

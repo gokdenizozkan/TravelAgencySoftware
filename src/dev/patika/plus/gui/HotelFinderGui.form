@@ -21,7 +21,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="entity.hotel.province"/>
+              <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="entity.hotel.province"/>
             </properties>
           </component>
           <component id="1d469" class="javax.swing.JComboBox" binding="provinceJcb">
@@ -41,7 +41,7 @@
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="entity.hotel.state"/>
+              <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="entity.hotel.state"/>
             </properties>
           </component>
           <grid id="cd6cf" binding="datesJp" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -89,7 +89,7 @@
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.room-finder.search-options.checkin-date"/>
+                      <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="gui.room-finder.search-options.checkin-date"/>
                     </properties>
                   </component>
                 </children>
@@ -131,7 +131,7 @@
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.room-finder.search-options.checkout-date"/>
+                      <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="gui.room-finder.search-options.checkout-date"/>
                     </properties>
                   </component>
                 </children>
@@ -141,7 +141,7 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="general.label.date"/>
+                  <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="general.label.date"/>
                 </properties>
               </component>
             </children>
@@ -151,7 +151,7 @@
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="general.action.find"/>
+              <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="general.action.find"/>
             </properties>
           </component>
           <grid id="c59b7" binding="guestsJp" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -167,7 +167,7 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.hotel-finder.guests-panel.adult"/>
+                  <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="gui.hotel-finder.guests-panel.adult"/>
                 </properties>
               </component>
               <component id="28b4c" class="javax.swing.JSpinner" binding="adultJs">
@@ -181,7 +181,7 @@
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.hotel-finder.guests-panel.child"/>
+                  <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="gui.hotel-finder.guests-panel.child"/>
                 </properties>
               </component>
               <component id="9f8a4" class="javax.swing.JSpinner" binding="childJs">

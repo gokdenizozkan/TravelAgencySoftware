@@ -13,7 +13,7 @@
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.reservation.add-reservation-button"/>
+          <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="gui.reservation.add-reservation-button"/>
         </properties>
       </component>
       <component id="90ed3" class="javax.swing.JButton" binding="listReservationsJb">
@@ -21,7 +21,7 @@
           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text resource-bundle="dev/patika/plus/l18n/locale-EN" key="gui.reservation.list-reservations-button"/>
+          <text resource-bundle="dev/patika/plus/l10n/locale-EN" key="gui.reservation.list-reservations-button"/>
         </properties>
       </component>
     </children>
