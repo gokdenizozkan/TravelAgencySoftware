@@ -111,7 +111,8 @@ public class AneGui extends JFrame {
             int selectedRow = hotelsJt.getSelectedRow();
             if (selectedRow == -1) return;
             int id = (int) hotelsJt.getValueAt(selectedRow, 0);
-            HotelOperation.delete(id);
+            HotelOperation.delete(id)
+                    .handleResponse();
         });
         reloadTableJmi.addActionListener(e -> loadHotels());
     }
