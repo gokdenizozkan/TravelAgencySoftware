@@ -70,7 +70,8 @@ public class UserAneGui extends JFrame {
             String type = typeJcb.getSelectedItem().toString();
             User user = new User(username, password, type);
 
-            UserOperation.add(user);
+            UserOperation.add(user)
+                    .handleResponse();
             loadUsers();
         });
     }

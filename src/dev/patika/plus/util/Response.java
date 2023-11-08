@@ -41,7 +41,7 @@ public class Response {
         return this;
     }
 
-    public void handle() {
+    public void handleResponse() {
         if (response == -1) {
             Dialog.of(Dialog.Type.MESSAGE)
                     .withMessage("An error occurred while " + process + ".")

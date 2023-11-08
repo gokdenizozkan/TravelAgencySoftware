@@ -107,7 +107,8 @@ public class SeasonAneGui extends JFrame {
             String startDate = Date.ify(startYearJcb, startMonthJcb, startDayJcb);
             String endDate = Date.ify(endYearJcb, endMonthJcb, endDayJcb);
 
-            SeasonOperation.add(hotelId, name, startDate, endDate);
+            SeasonOperation.add(hotelId, name, startDate, endDate)
+                    .handleResponse();
             loadSeasons();
         });
 
@@ -116,13 +117,15 @@ public class SeasonAneGui extends JFrame {
             String name = nameJtf.getText();
             String startDate = Date.ify(startYearJcb, startMonthJcb, startDayJcb);
             String endDate = Date.ify(endYearJcb, endMonthJcb, endDayJcb);
-            SeasonOperation.update(seasonId, name, startDate, endDate);
+            SeasonOperation.update(seasonId, name, startDate, endDate)
+                    .handleResponse();
             loadSeasons();
         });
 
         deleteJb.addActionListener(e -> {
             int seasonId = (int) updateJb.getClientProperty("id");
-            SeasonOperation.delete(seasonId);
+            SeasonOperation.delete(seasonId)
+                    .handleResponse();
             loadSeasons();
         });
     }

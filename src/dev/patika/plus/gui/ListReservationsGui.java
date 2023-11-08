@@ -57,33 +57,28 @@ public class ListReservationsGui extends JFrame {
         reservationsDeleteMenuItem.addActionListener(e -> {
             int selectedRow = reservationsJt.getSelectedRow();
             int id = Integer.parseInt(reservationsTableModel.getValueAt(selectedRow, 0).toString());
-            ReservationOperation.delete(id);
+            ReservationOperation.delete(id)
+                    .handleResponse();
             reservationsTableModel.removeRow(selectedRow);
         });
     }
 
     private void loadReservations() {
         reservationsTableModel.setRowCount(0);
-        ReservationOperation.retrieveAll().forEach(reservation -> {
-            reservationsTableModel.addRow(new Object[]{
-                    reservation.getId(),
-                    reservation.getContactName(),
-                    reservation.getContactPhoneNumber(),
-                    reservation.getContactEmail(),
-                    HotelOperation.retrieve(reservation.getHotelId()).getName(),
-                    HotelOperation.retrieve(reservation.getHotelId()).getAddress(),
-                    HotelOperation.retrieve(reservation.getHotelId()).getPhoneNumber(),
-                    reservation.getRoomId(),
-                    RoomOperation.retrieve(reservation.getRoomId()).getOfType(),
-                    RoomOperation.retrieve(reservation.getRoomId()).getBeds(),
-                    reservation.getTotalPrice(),
-                    reservation.getStartDate(),
-                    reservation.getEndDate()
-            });
-        });
-    }
-
-    public static void main(String[] args) {
-        new ListReservationsGui();
+        ReservationOperation.retrieveAll().forEach(reservation -> reservationsTableModel.addRow(new Object[]{
+                reservation.getId(),
+                reservation.getContactName(),
+                reservation.getContactPhoneNumber(),
+                reservation.getContactEmail(),
+                HotelOperation.retrieve(reservation.getHotelId()).getName(),
+                HotelOperation.retrieve(reservation.getHotelId()).getAddress(),
+                HotelOperation.retrieve(reservation.getHotelId()).getPhoneNumber(),
+                reservation.getRoomId(),
+                RoomOperation.retrieve(reservation.getRoomId()).getOfType(),
+                RoomOperation.retrieve(reservation.getRoomId()).getBeds(),
+                reservation.getTotalPrice(),
+                reservation.getStartDate(),
+                reservation.getEndDate()
+        }));
     }
 }

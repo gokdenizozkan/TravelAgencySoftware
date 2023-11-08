@@ -93,8 +93,10 @@ public class ReservationSummaryGui extends JFrame {
             reservation.setContactPhoneNumber(contactPhoneNumberJtf.getText());
             reservation.setContactEmail(contactEmailJtf.getText());
 
-            ReservationOperation.add(reservation);
-            RoomAvailabilityOperation.add(reservation);
+            ReservationOperation.add(reservation)
+                    .handleResponse();
+            RoomAvailabilityOperation.add(reservation)
+                    .handleResponse();
             dispose();
         });
     }

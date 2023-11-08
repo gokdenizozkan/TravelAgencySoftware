@@ -49,7 +49,8 @@ public class RegisterGui extends JFrame {
             String username = usernameJtf.getText();
             String password = new String(passwordJpf.getPassword());
             String ofType = ofTypeJcb.getSelectedItem().toString();
-            UserOperation.add(username, password, ofType);
+            UserOperation.add(username, password, ofType)
+                    .handleResponse();
             dispose();
         });
     }

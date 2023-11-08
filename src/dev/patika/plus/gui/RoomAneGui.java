@@ -3,9 +3,21 @@ package dev.patika.plus.gui;
 import dev.patika.plus.entity.Room;
 import dev.patika.plus.entity.Season;
 import dev.patika.plus.essential.Config;
-import dev.patika.plus.operation.*;
+import dev.patika.plus.operation.HotelOperation;
+import dev.patika.plus.operation.PricingOperation;
+import dev.patika.plus.operation.PropertyOperation;
+import dev.patika.plus.operation.RoomOperation;
+import dev.patika.plus.operation.SeasonOperation;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JComboBox;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -101,7 +113,8 @@ public class RoomAneGui extends JFrame {
             int size = Integer.parseInt(sizeJtf.getText());
             String facilities = facilitiesJtf.getClientProperty("representativeIds").toString();
             Room room = new Room(hotelId, ofType, beds, stock, size, facilities);
-            RoomOperation.add(room);
+            RoomOperation.add(room)
+                    .handleResponse();
 
             // pricing add
             HashMap<String, Integer> pricing = new HashMap<>();
@@ -117,7 +130,8 @@ public class RoomAneGui extends JFrame {
             String selectedBoardType = (String) boardTypeJcb.getSelectedItem();
             int boardTypeId = HotelOperation.retrieveBoardTypesReversed(hotelId).get(selectedBoardType);
 
-            PricingOperation.add(room.getId(), seasonId, boardTypeId, pricing.get("Adult"), pricing.get("Child"));
+            PricingOperation.add(room.getId(), seasonId, boardTypeId, pricing.get("Adult"), pricing.get("Child"))
+                    .handleResponse();
         });
     }
 

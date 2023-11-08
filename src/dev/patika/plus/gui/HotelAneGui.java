@@ -112,7 +112,8 @@ public class HotelAneGui extends JFrame {
 
         submitJb.addActionListener(e -> {
             Hotel hotel = constructHotelFromFields();
-            HotelOperation.add(hotel);
+            HotelOperation.add(hotel)
+                    .handleResponse();
         });
     }
 
@@ -151,7 +152,8 @@ public class HotelAneGui extends JFrame {
     /**
      * Fills the text field and its custom client property
      * with the given representative ids and their corresponding names.
-     * @param textField The text field to be filled.
+     *
+     * @param textField         The text field to be filled.
      * @param representativeIds The string that holds representative ids.
      */
     private void fillTextField(JTextField textField, String representativeIds) {
@@ -161,9 +163,5 @@ public class HotelAneGui extends JFrame {
         ArrayList<Integer> ids = Parsable.parseIntegerListStatic(representativeIds, ",");
         textField.setText(PropertyOperation.retrieveNames(ids).toString());
         textField.putClientProperty("representativeIds", representativeIds);
-    }
-
-    public static void main(String[] args) {
-        new HotelAneGui(1);
     }
 }
