@@ -2,6 +2,7 @@ package dev.patika.plus.operation;
 
 import dev.patika.plus.entity.Room;
 import dev.patika.plus.essential.Database;
+import dev.patika.plus.util.Response;
 import dev.patika.plus.util.Util;
 
 import java.sql.PreparedStatement;
@@ -10,9 +11,56 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class RoomOperation {
-    public static void add(Room room) {
-        if (exists(room.getId())) update(room);
-        else insert(room);
+    public static Response add(Room room) {
+        if (exists(room.getId())) return update(room);
+        else return insert(room);
+    }
+
+    private static Response insert(Room room) {
+        int response = -1;
+        String query = "INSERT INTO room (hotel_id, of_type, beds, stock, size, facilities) VALUES (?, ?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = Database.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, room.getHotelId());
+            preparedStatement.setString(2, room.getOfType());
+            preparedStatement.setInt(3, room.getBeds());
+            preparedStatement.setInt(4, room.getStock());
+            preparedStatement.setInt(5, room.getSize());
+            preparedStatement.setString(6, room.getFacilities());
+
+            response = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Util.close(preparedStatement);
+        }
+        return Response.form(response, "adding room");
+    }
+
+    private static Response update(Room room) {
+        String query = "UPDATE room SET hotel_id = ?, of_type = ?, beds = ?, stock = ?, size = ?, facilities = ? WHERE id = ?";
+        PreparedStatement preparedStatement = null;
+
+        int response = -1;
+        try {
+            preparedStatement = Database.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, room.getHotelId());
+            preparedStatement.setString(2, room.getOfType());
+            preparedStatement.setInt(3, room.getBeds());
+            preparedStatement.setInt(4, room.getStock());
+            preparedStatement.setInt(5, room.getSize());
+            preparedStatement.setString(6, room.getFacilities());
+            preparedStatement.setInt(7, room.getId());
+
+            response = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Util.close(preparedStatement);
+        }
+
+        return Response.form(response, "updating room");
     }
 
     public static boolean exists(int roomId) {
@@ -35,48 +83,6 @@ public class RoomOperation {
         }
 
         return exists;
-    }
-
-    private static void insert(Room room) {
-        String query = "INSERT INTO room (hotel_id, of_type, beds, stock, size, facilities) VALUES (?, ?, ?, ?, ?, ?)";
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = Database.getConnection().prepareStatement(query);
-            preparedStatement.setInt(1, room.getHotelId());
-            preparedStatement.setString(2, room.getOfType());
-            preparedStatement.setInt(3, room.getBeds());
-            preparedStatement.setInt(4, room.getStock());
-            preparedStatement.setInt(5, room.getSize());
-            preparedStatement.setString(6, room.getFacilities());
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            Util.close(preparedStatement);
-        }
-    }
-
-    private static void update(Room room) {
-        String query = "UPDATE room SET hotel_id = ?, of_type = ?, beds = ?, stock = ?, size = ?, facilities = ? WHERE id = ?";
-        PreparedStatement preparedStatement = null;
-
-        try {
-            preparedStatement = Database.getConnection().prepareStatement(query);
-            preparedStatement.setInt(1, room.getHotelId());
-            preparedStatement.setString(2, room.getOfType());
-            preparedStatement.setInt(3, room.getBeds());
-            preparedStatement.setInt(4, room.getStock());
-            preparedStatement.setInt(5, room.getSize());
-            preparedStatement.setString(6, room.getFacilities());
-            preparedStatement.setInt(7, room.getId());
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            Util.close(preparedStatement);
-        }
     }
 
     public static Room retrieve(int roomId) {

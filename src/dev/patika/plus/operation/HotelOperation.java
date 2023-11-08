@@ -2,6 +2,7 @@ package dev.patika.plus.operation;
 
 import dev.patika.plus.entity.Hotel;
 import dev.patika.plus.essential.Database;
+import dev.patika.plus.util.Response;
 import dev.patika.plus.util.Util;
 
 import java.sql.PreparedStatement;
@@ -12,9 +13,70 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class HotelOperation {
-    public static void add(Hotel hotel) {
-        if (exists(hotel.getId())) update(hotel);
-        else insert(hotel);
+    public static Response add(Hotel hotel) {
+        if (exists(hotel.getId())) return update(hotel);
+        else return insert(hotel);
+    }
+
+    private static Response insert(Hotel hotel) {
+        String query = "INSERT INTO hotel (name, province, state, address, email, phone_number, stars, facilities, board_types) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement = null;
+
+        int response = -1;
+        try {
+            preparedStatement = Database.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, hotel.getName());
+            preparedStatement.setString(2, hotel.getProvince());
+            preparedStatement.setString(3, hotel.getState());
+            preparedStatement.setString(4, hotel.getAddress());
+            preparedStatement.setString(5, hotel.getEmail());
+            preparedStatement.setString(6, hotel.getPhoneNumber());
+            preparedStatement.setInt(7, hotel.getStars());
+            preparedStatement.setString(8, hotel.getFacilities());
+            preparedStatement.setString(9, hotel.getBoardTypes());
+
+            response = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Util.close(preparedStatement);
+        }
+
+        return Response.form(response, "adding hotel");
+    }
+
+    private static Response update(Hotel hotel) {
+        String query = "UPDATE hotel SET name = ?, province = ?, state = ?, address = ?, email = ?, phone_number = ?, stars = ?, facilities = ?, board_types = ? WHERE id = ?";
+        PreparedStatement preparedStatement = null;
+
+        int response = -1;
+        try {
+            preparedStatement = Database.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, hotel.getName());
+            preparedStatement.setString(2, hotel.getProvince());
+            preparedStatement.setString(3, hotel.getState());
+            preparedStatement.setString(4, hotel.getAddress());
+            preparedStatement.setString(5, hotel.getEmail());
+            preparedStatement.setString(6, hotel.getPhoneNumber());
+            preparedStatement.setInt(7, hotel.getStars());
+            preparedStatement.setString(8, hotel.getFacilities());
+            preparedStatement.setString(9, hotel.getBoardTypes());
+            preparedStatement.setInt(10, hotel.getId());
+
+            response = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Util.close(preparedStatement);
+        }
+
+        return Response.form(response, "updating hotel");
+    }
+
+    public static Response delete(int hotelId) {
+        // TODO: delete hotel
+        System.out.println("WIP::delete hotel");
+        return Response.form(-1, "deleting hotel");
     }
 
     public static boolean exists(int hotelId) {
@@ -37,60 +99,6 @@ public class HotelOperation {
         }
 
         return exists;
-    }
-
-    private static void insert(Hotel hotel) {
-        String query = "INSERT INTO hotel (name, province, state, address, email, phone_number, stars, facilities, board_types) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = Database.getConnection().prepareStatement(query);
-            preparedStatement.setString(1, hotel.getName());
-            preparedStatement.setString(2, hotel.getProvince());
-            preparedStatement.setString(3, hotel.getState());
-            preparedStatement.setString(4, hotel.getAddress());
-            preparedStatement.setString(5, hotel.getEmail());
-            preparedStatement.setString(6, hotel.getPhoneNumber());
-            preparedStatement.setInt(7, hotel.getStars());
-            preparedStatement.setString(8, hotel.getFacilities());
-            preparedStatement.setString(9, hotel.getBoardTypes());
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            Util.close(preparedStatement);
-        }
-    }
-
-    private static void update(Hotel hotel) {
-        String query = "UPDATE hotel SET name = ?, province = ?, state = ?, address = ?, email = ?, phone_number = ?, stars = ?, facilities = ?, board_types = ? WHERE id = ?";
-        PreparedStatement preparedStatement = null;
-
-        try {
-            preparedStatement = Database.getConnection().prepareStatement(query);
-            preparedStatement.setString(1, hotel.getName());
-            preparedStatement.setString(2, hotel.getProvince());
-            preparedStatement.setString(3, hotel.getState());
-            preparedStatement.setString(4, hotel.getAddress());
-            preparedStatement.setString(5, hotel.getEmail());
-            preparedStatement.setString(6, hotel.getPhoneNumber());
-            preparedStatement.setInt(7, hotel.getStars());
-            preparedStatement.setString(8, hotel.getFacilities());
-            preparedStatement.setString(9, hotel.getBoardTypes());
-            preparedStatement.setInt(10, hotel.getId());
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            Util.close(preparedStatement);
-        }
-    }
-
-    public static boolean delete(int hotelId) {
-        // TODO: delete hotel
-        System.out.println("WIP::delete hotel");
-        return false;
     }
 
     /**

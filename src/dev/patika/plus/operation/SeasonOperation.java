@@ -2,6 +2,7 @@ package dev.patika.plus.operation;
 
 import dev.patika.plus.entity.Season;
 import dev.patika.plus.essential.Database;
+import dev.patika.plus.util.Response;
 import dev.patika.plus.util.Util;
 
 import java.sql.PreparedStatement;
@@ -11,7 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class SeasonOperation {
-    public static boolean add(int hotelId, String name, String startDate, String endDate) {
+    public static Response add(int hotelId, String name, String startDate, String endDate) {
         int response = -1;
         String query = "INSERT INTO season (hotel_id, name, start, end) VALUES (?, ?, ?, ?)";
 
@@ -28,10 +29,10 @@ public class SeasonOperation {
         } finally {
             Util.close(preparedStatement);
         }
-        return response != -1;
+        return Response.form(response, "added season");
     }
 
-    public static boolean update(int seasonId, String name, String startDate, String endDate) {
+    public static Response update(int seasonId, String name, String startDate, String endDate) {
         int response = -1;
         String query = "UPDATE season SET name = ?, start = ?, end = ? WHERE id = ?";
 
@@ -49,10 +50,10 @@ public class SeasonOperation {
             Util.close(preparedStatement);
         }
 
-        return response != -1;
+        return Response.form(response, "updated season");
     }
 
-    public static boolean delete(int seasonId) {
+    public static Response delete(int seasonId) {
         int response = -1;
         String query = "DELETE FROM season WHERE id = ?";
 
@@ -67,7 +68,7 @@ public class SeasonOperation {
             Util.close(preparedStatement);
         }
 
-        return response != -1;
+        return Response.form(response, "deleted season");
     }
 
     public static ArrayList<Season> retrieveAll(int hotelId) {

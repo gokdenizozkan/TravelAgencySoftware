@@ -92,10 +92,20 @@ public class Dialog {
             JOptionPane.showMessageDialog(null, "An error occured during the process.", "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
+
+        public void displayError(String process) {
+            JOptionPane.showMessageDialog(null, "An error occured during the " + process + " process.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
+        public void displaySuccess() {
+            JOptionPane.showMessageDialog(null, "The process has been completed successfully.", "Success",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     public enum Type {
-        MESSAGE, INPUT, CONFIRM;
+        MESSAGE, INPUT, CONFIRM
     }
 
     public enum BehaviourType {

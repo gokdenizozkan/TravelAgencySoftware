@@ -4,6 +4,7 @@ import dev.patika.plus.entity.Pricing;
 import dev.patika.plus.entity.Season;
 import dev.patika.plus.essential.Database;
 import dev.patika.plus.entity.Reservation;
+import dev.patika.plus.util.Response;
 import dev.patika.plus.util.Util;
 
 import java.sql.PreparedStatement;
@@ -14,9 +15,11 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class PricingOperation {
-    public static void add(int roomId, int seasonId, int boardTypeId, int priceAdult, int priceChild) {
+    public static Response add(int roomId, int seasonId, int boardTypeId, int priceAdult, int priceChild) {
         String query = "INSERT INTO pricing (room_id, season_id, board_type_id, price_adult, price_child) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = null;
+
+        int response = -1;
         try {
             preparedStatement = Database.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, roomId);
@@ -24,12 +27,14 @@ public class PricingOperation {
             preparedStatement.setInt(3, boardTypeId);
             preparedStatement.setInt(4, priceAdult);
             preparedStatement.setInt(5, priceChild);
-            preparedStatement.executeUpdate();
+            response = preparedStatement.executeUpdate();
         } catch (SQLException exception) {
             exception.printStackTrace();
         } finally {
             Util.close(preparedStatement);
         }
+
+        return Response.form(response, "adding pricing");
     }
 
     public static Pricing retrieve(int roomId, int seasonId, int boardTypeId) {

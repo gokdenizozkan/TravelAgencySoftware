@@ -3,6 +3,7 @@ package dev.patika.plus.operation;
 import dev.patika.plus.entity.RoomAvailability;
 import dev.patika.plus.essential.Database;
 import dev.patika.plus.entity.Reservation;
+import dev.patika.plus.util.Response;
 import dev.patika.plus.util.Util;
 
 import java.sql.PreparedStatement;
@@ -10,11 +11,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ReservationOperation {
-    public static void add(Reservation reservation) {
+    public static Response add(Reservation reservation) {
         String query = "INSERT INTO reservation (hotel_id, room_id, board_type_id, start_date, end_date, adult_guest_count, child_guest_count, total_price, contact_name, contact_phone_number, contact_email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = null;
+
+        int response = -1;
         try {
             preparedStatement = Database.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, reservation.getHotelId());
@@ -28,15 +32,19 @@ public class ReservationOperation {
             preparedStatement.setString(9, reservation.getContactName());
             preparedStatement.setString(10, reservation.getContactPhoneNumber());
             preparedStatement.setString(11, reservation.getContactEmail());
-            preparedStatement.executeUpdate();
+            response = preparedStatement.executeUpdate();
         } catch (SQLException exception) {
             exception.printStackTrace();
         } finally {
             Util.close(preparedStatement);
         }
+
+        return Response.form(response, "adding reservation");
     }
 
-    public static void delete(int id) {
+    public static Response delete(int id) {
+        AtomicInteger response = new AtomicInteger(-1);
+
         // Room availability updates
         Reservation reservation = retrieve(id);
         LocalDate startDate = LocalDate.parse(reservation.getStartDate());
@@ -46,8 +54,11 @@ public class ReservationOperation {
         startDate.datesUntil(endDate).forEach(date -> {
             RoomAvailability roomAvailability = RoomAvailabilityOperation.retrieve(roomId, date.toString());
             roomAvailability.setAmount(roomAvailability.getAmount() + 1);
-            RoomAvailabilityOperation.update(roomAvailability);
+
+            response.set(RoomAvailabilityOperation.update(roomAvailability).getResponse());
         });
+
+        if (response.get() == -1) return Response.form(response.get(), "deleting reservation");
 
         // Delete reservation from its own table
         String query = "DELETE FROM reservation WHERE id = ?";
@@ -55,12 +66,14 @@ public class ReservationOperation {
         try {
             preparedStatement = Database.getConnection().prepareStatement(query);
             preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
+            response.set(preparedStatement.executeUpdate());
         } catch (SQLException exception) {
             exception.printStackTrace();
         } finally {
             Util.close(preparedStatement);
         }
+
+        return Response.form(response.get(), "deleting reservation");
     }
 
     public static Reservation retrieve(int id) {

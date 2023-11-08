@@ -4,6 +4,7 @@ import dev.patika.plus.entity.Reservation;
 import dev.patika.plus.entity.Room;
 import dev.patika.plus.entity.RoomAvailability;
 import dev.patika.plus.essential.Database;
+import dev.patika.plus.util.Response;
 import dev.patika.plus.util.Util;
 
 import java.sql.PreparedStatement;
@@ -11,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * This class contains methods for room availability operations.
@@ -20,6 +22,67 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * If a room has an entry with a specific date on the room_availability table, it is not available if the amount is 0.
  */
 public class RoomAvailabilityOperation {
+    public static Response add(Reservation reservation) {
+        LocalDate startDate = LocalDate.parse(reservation.getStartDate());
+        LocalDate endDate = LocalDate.parse(reservation.getEndDate());
+        int roomId = reservation.getRoomId();
+
+        AtomicInteger response = new AtomicInteger(-1);
+        startDate.datesUntil(endDate).forEach(date -> {
+            RoomAvailability roomAvailability = retrieve(roomId, date.toString());
+            if (roomAvailability == null) {
+                Room room = RoomOperation.retrieve(roomId);
+                roomAvailability = new RoomAvailability(roomId, room.getStock() - 1, date.toString());
+                response.set(
+                        insert(roomAvailability).getResponse());
+            }
+            else {
+                roomAvailability.setAmount(roomAvailability.getAmount() - 1);
+                response.set(
+                        update(roomAvailability).getResponse());
+            }
+        });
+        return Response.form(response.get(), "changing room availability");
+    }
+
+    public static Response insert(RoomAvailability roomAvailability) {
+        String query = "INSERT INTO room_availability (room_id, amount, date) VALUES (?, ?, ?)";
+        PreparedStatement preparedStatement = null;
+
+        int response = -1;
+        try {
+            preparedStatement = Database.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, roomAvailability.getRoomId());
+            preparedStatement.setInt(2, roomAvailability.getAmount());
+            preparedStatement.setString(3, roomAvailability.getDate());
+            response = preparedStatement.executeUpdate();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } finally {
+            Util.close(preparedStatement);
+        }
+        return Response.form(response, "changing room availability");
+    }
+
+    public static Response update(RoomAvailability roomAvailability) {
+        String query = "UPDATE room_availability SET amount = ? WHERE room_id = ? AND date = ?";
+        PreparedStatement preparedStatement = null;
+
+        int response = -1;
+        try {
+            preparedStatement = Database.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, roomAvailability.getAmount());
+            preparedStatement.setInt(2, roomAvailability.getRoomId());
+            preparedStatement.setString(3, roomAvailability.getDate());
+            response = preparedStatement.executeUpdate();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } finally {
+            Util.close(preparedStatement);
+        }
+        return Response.form(response, "changing room availability");
+    }
+
     protected static boolean isAvailable(int roomId, String date) {
         boolean available = false;
         String query = "SELECT * FROM room_availability WHERE room_id = ? AND date = ?";
@@ -70,57 +133,5 @@ public class RoomAvailabilityOperation {
             Util.close(preparedStatement, resultSet);
         }
         return roomAvailability;
-    }
-
-    public static void add(Reservation reservation) {
-        LocalDate startDate = LocalDate.parse(reservation.getStartDate());
-        LocalDate endDate = LocalDate.parse(reservation.getEndDate());
-        int roomId = reservation.getRoomId();
-
-        startDate.datesUntil(endDate).forEach(date -> {
-            RoomAvailability roomAvailability = retrieve(roomId, date.toString());
-            if (roomAvailability == null) {
-                Room room = RoomOperation.retrieve(roomId);
-                roomAvailability = new RoomAvailability(roomId, room.getStock() - 1, date.toString());
-                insert(roomAvailability);
-            }
-            else {
-                roomAvailability.setAmount(roomAvailability.getAmount() - 1);
-                update(roomAvailability);
-            }
-        });
-
-    }
-
-    public static void insert(RoomAvailability roomAvailability) {
-        String query = "INSERT INTO room_availability (room_id, amount, date) VALUES (?, ?, ?)";
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = Database.getConnection().prepareStatement(query);
-            preparedStatement.setInt(1, roomAvailability.getRoomId());
-            preparedStatement.setInt(2, roomAvailability.getAmount());
-            preparedStatement.setString(3, roomAvailability.getDate());
-            preparedStatement.executeUpdate();
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        } finally {
-            Util.close(preparedStatement);
-        }
-    }
-
-    public static void update(RoomAvailability roomAvailability) {
-        String query = "UPDATE room_availability SET amount = ? WHERE room_id = ? AND date = ?";
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = Database.getConnection().prepareStatement(query);
-            preparedStatement.setInt(1, roomAvailability.getAmount());
-            preparedStatement.setInt(2, roomAvailability.getRoomId());
-            preparedStatement.setString(3, roomAvailability.getDate());
-            preparedStatement.executeUpdate();
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        } finally {
-            Util.close(preparedStatement);
-        }
     }
 }
