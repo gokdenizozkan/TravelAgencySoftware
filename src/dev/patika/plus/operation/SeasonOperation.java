@@ -11,6 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 public class SeasonOperation {
     public static Response add(int hotelId, String name, String startDate, String endDate) {
@@ -148,47 +151,65 @@ public class SeasonOperation {
         return season;
     }
 
-    public static ArrayList<Season> retrieveByPeriod(String startDate, String endDate) {
+    /**
+     * For all dates between the given startDate and endDate, checks if there is a season corresponding to them.
+     * If exists, adds to the list.
+     * If not, adds null to the list.
+     * @param hotelId   hotel id
+     * @param startDate inclusive
+     * @param endDate   inclusive
+     * @return ArrayList of Season
+     */
+    public static HashSet<Season> retrieveByPeriod(int hotelId, String startDate, String endDate) {
+        // get all seasons of a hotel
+        String query = "SELECT * FROM season WHERE hotel_id = ?";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        ArrayList<Season> seasons = new ArrayList<>();
+        try {
+            preparedStatement = Database.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, hotelId);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Season season = new Season(resultSet);
+                seasons.add(season);
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } finally {
+            Util.close(preparedStatement);
+        }
+
+        // compare each season with the given period
         LocalDate start = LocalDate.parse(startDate);
         LocalDate end = LocalDate.parse(endDate);
+        ArrayList<LocalDate> dates = start.datesUntil(end).collect(Collectors.toCollection(ArrayList::new));
+
+        HashSet<Season> foundSeasons = new HashSet<>();
+        for (LocalDate date : dates) {
+            int foundCounter = 0;
+
+            for (Season season : seasons) {
+                if (season == null) continue;
+                LocalDate seasonStart = LocalDate.parse(season.getStart());
+                LocalDate seasonEnd = LocalDate.parse(season.getEnd());
+                if (date.compareTo(seasonStart) >= 0 && date.compareTo(seasonEnd) <= 0) {
+                    foundSeasons.add(season);
+                    foundCounter++;
+                }
+            }
+            if (foundCounter == 0) return null;
+        }
+
+        return foundSeasons;
+    }
+
+    public static void deneme(String date) {
         String query = "SELECT * FROM season WHERE start <= ? AND end >= ?";
         ArrayList<Season> seasons = new ArrayList<>();
         ArrayList<Integer> seasonsIds = new ArrayList<>();
 
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        try {
-            preparedStatement = Database.getConnection().prepareStatement(query);
-            // startdate
-            preparedStatement.setString(1, startDate);
-            preparedStatement.setString(2, startDate);
-            resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                Season season = new Season(resultSet);
-                if (seasonsIds.contains(season.getId())) continue;
-                seasonsIds.add(season.getId());
-                seasons.add(new Season(resultSet));
-            }
-
-            // enddate
-            preparedStatement.setString(1, endDate);
-            preparedStatement.setString(2, endDate);
-            resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                Season season = new Season(resultSet);
-                if (seasonsIds.contains(season.getId())) continue;
-                seasonsIds.add(season.getId());
-                seasons.add(new Season(resultSet));
-            }
-
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        } finally {
-            Util.close(preparedStatement, resultSet);
-        }
-
-        return seasons;
+        AtomicReference<ResultSet> resultSet = null;
     }
 }

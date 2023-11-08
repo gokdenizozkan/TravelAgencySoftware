@@ -1,13 +1,13 @@
 package dev.patika.plus.util;
 
-import dev.patika.plus.essential.Database;
 
-import javax.swing.*;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JPasswordField;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class Util {
     // GUI
@@ -30,11 +30,19 @@ public class Util {
 
     public static boolean isAllComponentsFilled(JComponent... components) {
         for (JComponent component : components) {
+            if (component == null) continue;
+
             if (component instanceof JTextField) {
                 if (((JTextField) component).getText().isEmpty()) return false;
             }
-            else if (component instanceof JComboBox) {
+            if (component instanceof JComboBox) {
                 if (((JComboBox<?>) component).getSelectedItem() == null) return false;
+            }
+            if (component instanceof JPasswordField) {
+                if (new String(((JPasswordField) component).getPassword()).isEmpty()) return false;
+            }
+            if (component instanceof JSpinner) {
+                if (((JSpinner) component).getValue() == null) return false;
             }
         }
         return true;

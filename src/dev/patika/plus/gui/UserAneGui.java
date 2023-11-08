@@ -24,6 +24,7 @@ public class UserAneGui extends JFrame {
     private JLabel typeJl;
     private JComboBox typeJcb;
     private JButton submitJb;
+    private JButton switchJb;
     private DefaultTableModel usersTableModel;
 
     public UserAneGui() {
@@ -35,7 +36,7 @@ public class UserAneGui extends JFrame {
     private void init() {
         add(wrapper);
         setTitle("Admin Panel - " + dev.patika.plus.essential.Config.Gui.TITLE);
-        setSize(400, 200);
+        setSize(400, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -80,6 +81,12 @@ public class UserAneGui extends JFrame {
             UserOperation.add(user)
                     .handleResponse();
             loadUsers();
+        });
+
+        // switch
+        switchJb.addActionListener(e -> {
+            new ManagementGui();
+            dispose();
         });
     }
 

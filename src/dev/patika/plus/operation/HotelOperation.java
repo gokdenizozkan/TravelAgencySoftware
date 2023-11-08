@@ -137,7 +137,6 @@ public class HotelOperation {
             statement = Database.getConnection().createStatement();
             resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
-                System.out.println("In while");
                 hotel = new Hotel(resultSet);
                 hotels.add(hotel);
             }

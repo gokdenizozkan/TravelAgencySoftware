@@ -131,9 +131,4 @@ public class AneGui extends JFrame {
             hotelsTableModel.addRow(row);
         });
     }
-
-    public static void main(String[] args) {
-        new AneGui();
-    }
-
 }

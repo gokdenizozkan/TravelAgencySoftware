@@ -2,9 +2,11 @@ package dev.patika.plus.gui;
 
 import dev.patika.plus.entity.Hotel;
 import dev.patika.plus.entity.Reservation;
+import dev.patika.plus.entity.Season;
 import dev.patika.plus.essential.Config;
 import dev.patika.plus.operation.HotelOperation;
 import dev.patika.plus.operation.RoomAvailabilityOperation;
+import dev.patika.plus.operation.SeasonOperation;
 import dev.patika.plus.util.Date;
 import dev.patika.plus.util.Dialog;
 import dev.patika.plus.util.Util;
@@ -20,6 +22,7 @@ import javax.swing.JSpinner;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashSet;
 
 public class HotelFinderGui extends JFrame {
     private JPanel wrapper;
@@ -97,9 +100,12 @@ public class HotelFinderGui extends JFrame {
         for (String year : Date.getYears(2023, 2033)) {
             yearJcb.addItem(year);
         }
+        yearJcb.setSelectedIndex(-1);
         for (String month : Date.getMonths()) {
             monthJcb.addItem(month);
         }
+        monthJcb.setSelectedIndex(-1);
+
         monthJcb.addActionListener(e -> {
             dayJcb.removeAllItems();
             String year = yearJcb.getSelectedItem().toString();
@@ -107,13 +113,16 @@ public class HotelFinderGui extends JFrame {
             for (String day : Date.getDays(year, month)) {
                 dayJcb.addItem(day);
             }
+            dayJcb.setSelectedIndex(-1);
         });
+
     }
 
     private void initActions() {
         findJb.addActionListener(e -> {
+            // fill
             boolean filled = Util.isAllComponentsFilled(provinceJcb, stateJcb, checkInYearJcb, checkInMonthJcb,
-                    checkInDayJcb, checkOutYearJcb, checkOutMonthJcb, checkOutDayJcb);
+                    checkInDayJcb, checkOutYearJcb, checkOutMonthJcb, checkOutDayJcb, adultJs, childJs);
             if (!filled) {
                 Dialog.of(Dialog.Type.MESSAGE)
                         .withMessage("Please fill all fields.")
@@ -126,6 +135,16 @@ public class HotelFinderGui extends JFrame {
             String state = stateJcb.getSelectedItem().toString();
             String checkInDate = Date.ify(checkInYearJcb, checkInMonthJcb, checkInDayJcb);
             String checkOutDate = Date.ify(checkOutYearJcb, checkOutMonthJcb, checkOutDayJcb);
+
+            // date check
+            if (checkInDate.compareTo(checkOutDate) > 0) {
+                Dialog.of(Dialog.Type.MESSAGE)
+                        .withMessage("Check-in date cannot be after check-out date.")
+                        .withTitle("Error")
+                        .display();
+                return;
+            }
+
             hotelsTableModel.setRowCount(0);
             for (Hotel hotel : HotelOperation.retrieveBy(province, state)) {
                 // stock check by RoomOpearion.isRoomAvailable
@@ -133,6 +152,10 @@ public class HotelFinderGui extends JFrame {
                 // if available, add to table
                 boolean available = RoomAvailabilityOperation.isAvailable(hotel.getId(), checkInDate, checkOutDate);
                 if (!available) continue;
+
+                // SEASON AVAILABILTY CHECK
+                HashSet<Season> seasons = SeasonOperation.retrieveByPeriod(hotel.getId(), checkInDate, checkOutDate);
+                if (seasons == null) continue;
 
                 hotelsTableModel.addRow(new Object[]{
                         hotel.getId(),
