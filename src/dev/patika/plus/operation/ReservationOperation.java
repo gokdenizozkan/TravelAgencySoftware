@@ -1,5 +1,6 @@
 package dev.patika.plus.operation;
 
+import dev.patika.plus.entity.RoomAvailability;
 import dev.patika.plus.essential.Database;
 import dev.patika.plus.entity.Reservation;
 import dev.patika.plus.util.Util;
@@ -7,6 +8,7 @@ import dev.patika.plus.util.Util;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ReservationOperation {
@@ -32,10 +34,22 @@ public class ReservationOperation {
         } finally {
             Util.close(preparedStatement);
         }
-
     }
 
     public static void delete(int id) {
+        // Room availability updates
+        Reservation reservation = retrieve(id);
+        LocalDate startDate = LocalDate.parse(reservation.getStartDate());
+        LocalDate endDate = LocalDate.parse(reservation.getEndDate());
+        int roomId = reservation.getRoomId();
+
+        startDate.datesUntil(endDate).forEach(date -> {
+            RoomAvailability roomAvailability = RoomAvailabilityOperation.retrieve(roomId, date.toString());
+            roomAvailability.setAmount(roomAvailability.getAmount() + 1);
+            RoomAvailabilityOperation.update(roomAvailability);
+        });
+
+        // Delete reservation from its own table
         String query = "DELETE FROM reservation WHERE id = ?";
         PreparedStatement preparedStatement = null;
         try {
@@ -47,6 +61,24 @@ public class ReservationOperation {
         } finally {
             Util.close(preparedStatement);
         }
+    }
+
+    public static Reservation retrieve(int id) {
+        String query = "SELECT * FROM reservation WHERE id = ?";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Reservation reservation = null;
+        try {
+            preparedStatement = Database.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) reservation = new Reservation(resultSet);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } finally {
+            Util.close(preparedStatement, resultSet);
+        }
+        return reservation;
     }
 
     public static ArrayList<Reservation> retrieveAll() {

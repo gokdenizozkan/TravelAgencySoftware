@@ -1,6 +1,5 @@
 package dev.patika.plus.entity;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 
 public class RoomAvailability {
@@ -18,15 +17,29 @@ public class RoomAvailability {
         }
     }
 
+    public RoomAvailability(int roomId, int amount, String date) {
+        this.roomId = roomId;
+        this.amount = amount;
+        this.date = date;
+    }
+
     public boolean isAvailable() {
         return amount > 0;
     }
 
-    public java.sql.Date getDate() {
-        return Date.valueOf(date);
+    public int getRoomId() {
+        return roomId;
     }
 
-    public String getDateInString() {
+    public int getAmount() {
+        return amount;
+    }
+
+    public String getDate() {
         return date;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 }

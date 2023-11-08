@@ -160,8 +160,4 @@ public class RoomOperation {
 
         return rooms;
     }
-
-    public static boolean isAvailable(int roomId, String startDate, String endDate) {
-        return RoomAvailabilityOperation.isAvailable(roomId, startDate, endDate);
-    }
 }

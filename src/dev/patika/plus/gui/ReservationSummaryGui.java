@@ -34,7 +34,6 @@ public class ReservationSummaryGui extends JFrame {
         this.room = RoomOperation.retrieve(reservation.getRoomId());
         this.hotel = HotelOperation.retrieve(room.getHotelId());
 
-
         init();
         initHtml();
         initFields();
@@ -93,19 +92,10 @@ public class ReservationSummaryGui extends JFrame {
             reservation.setContactName(contactNameJtf.getText());
             reservation.setContactPhoneNumber(contactPhoneNumberJtf.getText());
             reservation.setContactEmail(contactEmailJtf.getText());
+
             ReservationOperation.add(reservation);
+            RoomAvailabilityOperation.add(reservation);
             dispose();
         });
-    }
-
-    public static void main(String[] args) {
-        new ReservationSummaryGui(Reservation.reserve()
-                .withHotelId(1)
-                .withRoomId(3)
-                .withBoardTypeId(1)
-                .withAdultGuestCount(2)
-                .withChildGuestCount(1)
-                .withTotalPrice(500)
-        );
     }
 }
