@@ -111,6 +111,11 @@ public class HotelAneGui extends JFrame {
         });
 
         submitJb.addActionListener(e -> {
+            boolean filled = Util.isAllComponentsFilled(nameJtf, provinceJtf, stateJtf, addressJtf, emailJtf, phoneNumberJtf);
+            if (!filled) {
+                Dialog.getPremades().displayError("Please fill all the fields.");
+                return;
+            }
             Hotel hotel = constructHotelFromFields();
             HotelOperation.add(hotel)
                     .handleResponse();

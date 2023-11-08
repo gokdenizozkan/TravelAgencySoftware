@@ -2,6 +2,8 @@ package dev.patika.plus.gui;
 
 import dev.patika.plus.entity.User;
 import dev.patika.plus.operation.UserOperation;
+import dev.patika.plus.util.Dialog;
+import dev.patika.plus.util.Util;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -65,6 +67,11 @@ public class UserAneGui extends JFrame {
 
         // submit
         submitJb.addActionListener(e -> {
+            boolean filled = Util.isAllComponentsFilled(usernameJtf, passwordJpf, typeJcb);
+            if (!filled) {
+                Dialog.getPremades().displayError("Please fill all fields.");
+                return;
+            }
             String username = usernameJtf.getText();
             String password = new String(passwordJpf.getPassword());
             String type = typeJcb.getSelectedItem().toString();

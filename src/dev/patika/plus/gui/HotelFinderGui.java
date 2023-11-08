@@ -6,6 +6,8 @@ import dev.patika.plus.essential.Config;
 import dev.patika.plus.operation.HotelOperation;
 import dev.patika.plus.operation.RoomAvailabilityOperation;
 import dev.patika.plus.util.Date;
+import dev.patika.plus.util.Dialog;
+import dev.patika.plus.util.Util;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -59,7 +61,7 @@ public class HotelFinderGui extends JFrame {
         add(wrapper);
         setTitle("Hotel Finder - " + Config.Gui.TITLE);
         setSize(800, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -110,6 +112,16 @@ public class HotelFinderGui extends JFrame {
 
     private void initActions() {
         findJb.addActionListener(e -> {
+            boolean filled = Util.isAllComponentsFilled(provinceJcb, stateJcb, checkInYearJcb, checkInMonthJcb,
+                    checkInDayJcb, checkOutYearJcb, checkOutMonthJcb, checkOutDayJcb);
+            if (!filled) {
+                Dialog.of(Dialog.Type.MESSAGE)
+                        .withMessage("Please fill all fields.")
+                        .withTitle("Error")
+                        .display();
+                return;
+            }
+
             String province = provinceJcb.getSelectedItem().toString();
             String state = stateJcb.getSelectedItem().toString();
             String checkInDate = Date.ify(checkInYearJcb, checkInMonthJcb, checkInDayJcb);

@@ -56,10 +56,11 @@ public class ListReservationsGui extends JFrame {
     private void initActions() {
         reservationsDeleteMenuItem.addActionListener(e -> {
             int selectedRow = reservationsJt.getSelectedRow();
+            if (selectedRow == -1) return;
             int id = Integer.parseInt(reservationsTableModel.getValueAt(selectedRow, 0).toString());
             ReservationOperation.delete(id)
                     .handleResponse();
-            reservationsTableModel.removeRow(selectedRow);
+            loadReservations();
         });
     }
 

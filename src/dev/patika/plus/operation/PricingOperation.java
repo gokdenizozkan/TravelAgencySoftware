@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class PricingOperation {
@@ -78,11 +79,12 @@ public class PricingOperation {
         return pricings;
     }
 
-    public static int calculatePrice(Reservation reservation) {
+    public static Integer calculatePrice(Reservation reservation) {
         LocalDate start = LocalDate.parse(reservation.getStartDate());
         LocalDate end = LocalDate.parse(reservation.getEndDate());
 
         AtomicInteger price = new AtomicInteger();
+        AtomicBoolean error = new AtomicBoolean(false);
         start.datesUntil(end).forEach(date -> {
             int hotelId = reservation.getHotelId();
             int roomId = reservation.getRoomId();
@@ -94,11 +96,16 @@ public class PricingOperation {
             int seasonId = season.getId();
 
             Pricing pricing = PricingOperation.retrieve(roomId, seasonId, boardTypeId);
+            if (pricing == null) {
+                error.set(true);
+                return;
+            }
             int adultPrice = pricing.getPriceAdult() * adultGuestCount;
             int childPrice = pricing.getPriceChild() * childGuestCount;
 
-            price.addAndGet(adultPrice + childPrice);
+            price.set(price.get() + (adultPrice + childPrice));
         });
-        return price.get();
+        if (error.get()) return null;
+        else return price.get();
     }
 }

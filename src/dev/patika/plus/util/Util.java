@@ -2,6 +2,7 @@ package dev.patika.plus.util;
 
 import dev.patika.plus.essential.Database;
 
+import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.PreparedStatement;
@@ -25,5 +26,17 @@ public class Util {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static boolean isAllComponentsFilled(JComponent... components) {
+        for (JComponent component : components) {
+            if (component instanceof JTextField) {
+                if (((JTextField) component).getText().isEmpty()) return false;
+            }
+            else if (component instanceof JComboBox) {
+                if (((JComboBox<?>) component).getSelectedItem() == null) return false;
+            }
+        }
+        return true;
     }
 }

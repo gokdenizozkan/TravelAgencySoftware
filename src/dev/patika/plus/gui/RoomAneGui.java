@@ -8,6 +8,8 @@ import dev.patika.plus.operation.PricingOperation;
 import dev.patika.plus.operation.PropertyOperation;
 import dev.patika.plus.operation.RoomOperation;
 import dev.patika.plus.operation.SeasonOperation;
+import dev.patika.plus.util.Dialog;
+import dev.patika.plus.util.Util;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -106,6 +108,12 @@ public class RoomAneGui extends JFrame {
         facilitiesJb.addActionListener(e -> new PropertyAneGui(facilitiesJtf, "room_facility"));
 
         submitJb.addActionListener(e -> {
+            boolean filled = Util.isAllComponentsFilled(ofTypeJcb, bedsJs, stockJs, sizeJtf, seasonJcb, boardTypeJcb);
+            if (!filled) {
+                Dialog.getPremades().displayError("Please fill all the fields.");
+                return;
+            }
+
             // room add
             String ofType = (String) ofTypeJcb.getSelectedItem();
             int beds = (int) bedsJs.getValue();
@@ -140,9 +148,5 @@ public class RoomAneGui extends JFrame {
         for (String ageClassifier : PropertyOperation.retrieveAllNames("age_classifier")) {
             pricingTableModel.addRow(new Object[]{ageClassifier, 0});
         }
-    }
-
-    public static void main(String[] args) {
-        new RoomAneGui(1);
     }
 }

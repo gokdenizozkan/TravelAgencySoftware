@@ -133,22 +133,22 @@ public class PropertyAneGui extends JFrame {
     private void initActions() {
         addJb.addActionListener(e -> {
             int selectedRow = availablesJt.getSelectedRow();
-            if (selectedRow != -1) {
-                int id = (int) availablesTableModel.getValueAt(selectedRow, 0);
-                String name = (String) availablesTableModel.getValueAt(selectedRow, 1);
-                selectedTableModel.addRow(new Object[]{id, name});
-                availablesTableModel.removeRow(selectedRow);
-            }
+            if (selectedRow == -1) return;
+
+            int id = (int) availablesTableModel.getValueAt(selectedRow, 0);
+            String name = (String) availablesTableModel.getValueAt(selectedRow, 1);
+            selectedTableModel.addRow(new Object[]{id, name});
+            availablesTableModel.removeRow(selectedRow);
         });
 
         removeJb.addActionListener(e -> {
             int selectedRow = selectedJt.getSelectedRow();
-            if (selectedRow != -1) {
-                int id = (int) selectedTableModel.getValueAt(selectedRow, 0);
-                String name = (String) selectedTableModel.getValueAt(selectedRow, 1);
-                availablesTableModel.addRow(new Object[]{id, name});
-                selectedTableModel.removeRow(selectedRow);
-            }
+            if (selectedRow != -1) return;
+
+            int id = (int) selectedTableModel.getValueAt(selectedRow, 0);
+            String name = (String) selectedTableModel.getValueAt(selectedRow, 1);
+            availablesTableModel.addRow(new Object[]{id, name});
+            selectedTableModel.removeRow(selectedRow);
         });
 
         submitJb.addActionListener(e -> {
@@ -165,6 +165,7 @@ public class PropertyAneGui extends JFrame {
 
             originJtf.setText(names.toString());
             originJtf.putClientProperty("representativeIds", ids.toString());
+            dispose();
         });
     }
 }

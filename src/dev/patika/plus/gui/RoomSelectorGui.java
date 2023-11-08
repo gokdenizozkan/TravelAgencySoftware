@@ -7,6 +7,7 @@ import dev.patika.plus.operation.HotelOperation;
 import dev.patika.plus.operation.PricingOperation;
 import dev.patika.plus.operation.PropertyOperation;
 import dev.patika.plus.operation.RoomOperation;
+import dev.patika.plus.util.Dialog;
 import dev.patika.plus.util.Html;
 import dev.patika.plus.entity.Reservation;
 
@@ -74,15 +75,6 @@ public class RoomSelectorGui extends JFrame {
         Object[] headers = {"Id", "Room Type", "Beds", "Size"};
         roomsTableModel = new DefaultTableModel(headers, 0);
         roomsJt.setModel(roomsTableModel);
-        roomsJt.removeColumn(roomsJt.getColumnModel().getColumn(0));
-        for (Room room : RoomOperation.retrieveAvailables(hotelId, startDate, endDate)) {
-            roomsTableModel.addRow(new Object[]{
-                    room.getId(),
-                    room.getOfType(),
-                    room.getBeds(),
-                    room.getSize(),
-            });
-        }
 
         // board type
         HashMap<Integer, String> boardTypesMap = HotelOperation.retrieveBoardTypes(hotelId);
@@ -97,12 +89,32 @@ public class RoomSelectorGui extends JFrame {
             String selectedBoardType = boardTypeJcb.getSelectedItem().toString();
             int boardTypeId = boardTypesMapReversed.get(selectedBoardType);
             reservation.setBoardTypeId(boardTypeId);
+
+            // load table
+            roomsTableModel.setRowCount(0);
+            for (Room room : RoomOperation.retrieveAvailables(hotelId, startDate, endDate)) {
+                reservation.setRoomId(room.getId());
+                Integer price = PricingOperation.calculatePrice(reservation);
+                if (price == null) continue;
+
+                roomsTableModel.addRow(new Object[]{
+                        room.getId(),
+                        room.getOfType(),
+                        room.getBeds(),
+                        room.getSize(),
+                });
+            }
         });
 
         // reserve
         proceedJb.addActionListener(e -> {
             int row = roomsJt.getSelectedRow();
-            int roomId = (int) roomsJt.getModel().getValueAt(row, 0);
+            if (row == -1) {
+                Dialog.getPremades().displayError("Please select a room.");
+                return;
+            }
+
+            int roomId = (int) roomsJt.getValueAt(row, 0);
             int totalPrice = Integer.parseInt(priceInNumberJl.getText());
 
             reservation.setRoomId(roomId);

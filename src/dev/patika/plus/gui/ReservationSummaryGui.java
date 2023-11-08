@@ -4,8 +4,10 @@ import dev.patika.plus.entity.Hotel;
 import dev.patika.plus.entity.Room;
 import dev.patika.plus.essential.Config;
 import dev.patika.plus.operation.*;
+import dev.patika.plus.util.Dialog;
 import dev.patika.plus.util.Html;
 import dev.patika.plus.entity.Reservation;
+import dev.patika.plus.util.Util;
 
 import javax.swing.*;
 
@@ -89,6 +91,12 @@ public class ReservationSummaryGui extends JFrame {
 
     private void initActions() {
         reserveJb.addActionListener(e -> {
+            boolean filled = Util.isAllComponentsFilled(contactNameJtf, contactPhoneNumberJtf, contactEmailJtf);
+            if (!filled) {
+                Dialog.getPremades().displayError("Please fill all the fields.");
+                return;
+            }
+
             reservation.setContactName(contactNameJtf.getText());
             reservation.setContactPhoneNumber(contactPhoneNumberJtf.getText());
             reservation.setContactEmail(contactEmailJtf.getText());

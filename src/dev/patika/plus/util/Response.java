@@ -51,7 +51,7 @@ public class Response {
         }
         else {
             Dialog.of(Dialog.Type.MESSAGE)
-                    .withMessage("Successfully " + process + ".")
+                    .withMessage("The process " + process + " was done successfully.")
                     .withTitle("Success")
                     .withBehaviour(Dialog.BehaviourType.INFORMATION)
                     .display();

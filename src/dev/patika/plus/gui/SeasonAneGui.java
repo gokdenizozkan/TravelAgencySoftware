@@ -5,6 +5,7 @@ import dev.patika.plus.essential.Config;
 import dev.patika.plus.essential.Database;
 import dev.patika.plus.operation.SeasonOperation;
 import dev.patika.plus.util.Date;
+import dev.patika.plus.util.Dialog;
 import dev.patika.plus.util.Util;
 
 import javax.swing.*;
@@ -103,6 +104,11 @@ public class SeasonAneGui extends JFrame {
         });
 
         addJb.addActionListener(e -> {
+            boolean filled = Util.isAllComponentsFilled(nameJtf, startYearJcb, startMonthJcb, startDayJcb, endYearJcb, endMonthJcb, endDayJcb);
+            if (!filled) {
+                Dialog.getPremades().displayError("Please fill all fields.");
+                return;
+            }
             String name = nameJtf.getText();
             String startDate = Date.ify(startYearJcb, startMonthJcb, startDayJcb);
             String endDate = Date.ify(endYearJcb, endMonthJcb, endDayJcb);
@@ -113,6 +119,12 @@ public class SeasonAneGui extends JFrame {
         });
 
         updateJb.addActionListener(e -> {
+            boolean filled = Util.isAllComponentsFilled(nameJtf, startYearJcb, startMonthJcb, startDayJcb, endYearJcb, endMonthJcb, endDayJcb);
+            if (!filled) {
+                Dialog.getPremades().displayError("Please fill all fields.");
+                return;
+            }
+
             int seasonId = (int) updateJb.getClientProperty("id");
             String name = nameJtf.getText();
             String startDate = Date.ify(startYearJcb, startMonthJcb, startDayJcb);
@@ -124,6 +136,11 @@ public class SeasonAneGui extends JFrame {
 
         deleteJb.addActionListener(e -> {
             int seasonId = (int) updateJb.getClientProperty("id");
+            if (seasonId == 0) {
+                Dialog.getPremades().displayError("Please select a season.");
+                return;
+            }
+
             SeasonOperation.delete(seasonId)
                     .handleResponse();
             loadSeasons();

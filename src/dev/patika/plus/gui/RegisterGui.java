@@ -2,6 +2,7 @@ package dev.patika.plus.gui;
 
 import dev.patika.plus.operation.UserOperation;
 import dev.patika.plus.util.Dialog;
+import dev.patika.plus.util.Util;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,6 +47,12 @@ public class RegisterGui extends JFrame {
 
     private void initActions() {
         registerJb.addActionListener(e -> {
+            boolean filled = Util.isAllComponentsFilled(usernameJtf, passwordJpf, ofTypeJcb);
+            if (!filled) {
+                Dialog.getPremades().displayError("Fill all fields.");
+                return;
+            }
+
             String username = usernameJtf.getText();
             String password = new String(passwordJpf.getPassword());
             String ofType = ofTypeJcb.getSelectedItem().toString();
