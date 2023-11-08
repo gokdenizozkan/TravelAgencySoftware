@@ -102,6 +102,11 @@ public class Dialog {
             JOptionPane.showMessageDialog(null, "The process has been completed successfully.", "Success",
                     JOptionPane.INFORMATION_MESSAGE);
         }
+
+        public boolean isActionConfirmed(String action) {
+            return JOptionPane.showConfirmDialog(null, "Are you sure you want to " + action + "?", "Are you sure?",
+                    JOptionPane.YES_NO_OPTION) == 0;
+        }
     }
 
     public enum Type {

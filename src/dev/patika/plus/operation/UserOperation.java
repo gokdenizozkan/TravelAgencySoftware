@@ -2,6 +2,7 @@ package dev.patika.plus.operation;
 
 import dev.patika.plus.entity.User;
 import dev.patika.plus.essential.Database;
+import dev.patika.plus.util.Dialog;
 import dev.patika.plus.util.Response;
 import dev.patika.plus.util.Util;
 
@@ -63,6 +64,9 @@ public class UserOperation {
     }
 
     public static Response delete(int id) {
+        boolean confirmed = Dialog.getPremades().isActionConfirmed("delete");
+        if (!confirmed) return Response.form(-1, "deleting user");
+
         String query = "DELETE FROM user WHERE id = ?";
         PreparedStatement preparedStatement = null;
 

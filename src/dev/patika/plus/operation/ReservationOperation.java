@@ -3,6 +3,7 @@ package dev.patika.plus.operation;
 import dev.patika.plus.entity.RoomAvailability;
 import dev.patika.plus.essential.Database;
 import dev.patika.plus.entity.Reservation;
+import dev.patika.plus.util.Dialog;
 import dev.patika.plus.util.Response;
 import dev.patika.plus.util.Util;
 
@@ -43,6 +44,9 @@ public class ReservationOperation {
     }
 
     public static Response delete(int id) {
+        boolean confirmed = Dialog.getPremades().isActionConfirmed("delete");
+        if (!confirmed) return Response.form(-1, "deleting reservation");
+
         AtomicInteger response = new AtomicInteger(-1);
 
         // Room availability updates

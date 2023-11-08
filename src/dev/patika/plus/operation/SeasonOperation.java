@@ -2,6 +2,7 @@ package dev.patika.plus.operation;
 
 import dev.patika.plus.entity.Season;
 import dev.patika.plus.essential.Database;
+import dev.patika.plus.util.Dialog;
 import dev.patika.plus.util.Response;
 import dev.patika.plus.util.Util;
 
@@ -54,6 +55,9 @@ public class SeasonOperation {
     }
 
     public static Response delete(int seasonId) {
+        boolean confirmed = Dialog.getPremades().isActionConfirmed("delete");
+        if (!confirmed) return Response.form(-1, "deleting season");
+
         int response = -1;
         String query = "DELETE FROM season WHERE id = ?";
 

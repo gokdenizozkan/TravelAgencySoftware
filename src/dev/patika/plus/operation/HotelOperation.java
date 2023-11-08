@@ -75,6 +75,7 @@ public class HotelOperation {
 
     public static Response delete(int hotelId) {
         // TODO: delete hotel
+        // confirm
         System.out.println("WIP::delete hotel");
         return Response.form(-1, "deleting hotel");
     }
