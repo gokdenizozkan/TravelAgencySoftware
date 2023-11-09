@@ -74,6 +74,7 @@ public class RoomAneGui extends JFrame {
         for (String type : PropertyOperation.retrieveAllNames("room_type")) {
             ofTypeJcb.addItem(type);
         }
+        ofTypeJcb.setSelectedIndex(-1);
 
         // season
         ArrayList<Season> seasons = SeasonOperation.retrieveAll(hotelId);
@@ -112,6 +113,15 @@ public class RoomAneGui extends JFrame {
             if (!filled) {
                 Dialog.getPremades().displayError("Please fill all the fields.");
                 return;
+            }
+
+            // pricing valid check
+            for (int i = 0; i < pricingTableModel.getRowCount(); i++) {
+                int price = Integer.parseInt(pricingTableModel.getValueAt(i, 1).toString());
+                if (price <= 0) {
+                    Dialog.getPremades().displayError("Please check your pricings.");
+                    return;
+                }
             }
 
             // room add
