@@ -47,6 +47,7 @@ public class UserAneGui extends JFrame {
         Object[] headers = {"Id", "Username", "Password", "Type"};
         usersTableModel = new DefaultTableModel(headers, 0);
         usersJt.setModel(usersTableModel);
+        usersJt.setDefaultEditor(Object.class, null);
         loadUsers();
 
         // combo box

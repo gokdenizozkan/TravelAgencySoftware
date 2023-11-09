@@ -49,6 +49,7 @@ public class AneGui extends JFrame {
         Object[] headers = {"ID", "Name", "Province", "State", "Email", "Phone Number"};
         hotelsTableModel = new DefaultTableModel(headers, 0);
         hotelsJt.setModel(hotelsTableModel);
+        hotelsJt.setDefaultEditor(Object.class, null);
         loadHotels();
 
         // popup menu

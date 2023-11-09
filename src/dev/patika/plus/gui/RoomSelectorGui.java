@@ -75,6 +75,7 @@ public class RoomSelectorGui extends JFrame {
         Object[] headers = {"Id", "Room Type", "Beds", "Size"};
         roomsTableModel = new DefaultTableModel(headers, 0);
         roomsJt.setModel(roomsTableModel);
+        roomsJt.setDefaultEditor(Object.class, null);
 
         // board type
         HashMap<Integer, String> boardTypesMap = HotelOperation.retrieveBoardTypes(hotelId);

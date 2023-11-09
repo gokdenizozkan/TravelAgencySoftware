@@ -133,6 +133,7 @@ public class RoomAneGui extends JFrame {
                 pricing.put(age, price);
             }
 
+            room = RoomOperation.retrieveLast();
             int seasonId = (int) seasonJcb.getClientProperty("selectedItemId");
 
             String selectedBoardType = (String) boardTypeJcb.getSelectedItem();

@@ -108,6 +108,28 @@ public class RoomOperation {
         return room;
     }
 
+    public static Room retrieveLast() {
+        String query = "SELECT * FROM room ORDER BY id DESC LIMIT 1";
+        Room room = null;
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = Database.getConnection().prepareStatement(query);
+
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                room = new Room(resultSet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Util.close(preparedStatement, resultSet);
+        }
+
+        return room;
+    }
+
     /**
      * Retrieves all rooms found in the given hotel (id).
      * @param hotelId The id of the hotel.

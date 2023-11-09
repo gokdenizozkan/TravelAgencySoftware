@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.JButton;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class HotelAneGui extends JFrame {
@@ -46,6 +48,7 @@ public class HotelAneGui extends JFrame {
     private JLabel boardTypesJl;
     private JTextField boardTypesJtf;
     private JButton boardTypesJb;
+    private JLabel starsSliderLabelJl;
     private Hotel hotel;
 
     public HotelAneGui() {
@@ -120,6 +123,8 @@ public class HotelAneGui extends JFrame {
             HotelOperation.add(hotel)
                     .handleResponse();
         });
+
+        starsJs.addChangeListener(e -> starsSliderLabelJl.setText(String.valueOf(starsJs.getValue())));
     }
 
     private void fillFields(Hotel hotel) {

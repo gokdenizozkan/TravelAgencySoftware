@@ -33,7 +33,6 @@ public class SeasonAneGui extends JFrame {
     private JComboBox endYearJcb;
     private JComboBox endMonthJcb;
     private JComboBox endDayJcb;
-    private JTable priceJt;
     private JPanel startJp;
     private JPanel endJp;
     private JPanel seasonsJp;
@@ -72,6 +71,7 @@ public class SeasonAneGui extends JFrame {
         seasonsTableModel = new DefaultTableModel(headers, 0);
         seasonsJt.setModel(seasonsTableModel);
         seasonsJt.removeColumn(seasonsJt.getColumnModel().getColumn(0));
+        seasonsJt.setDefaultEditor(Object.class, null);
 
         // date comboboxes
         readyDatePicker(startYearJcb, startMonthJcb, startDayJcb);

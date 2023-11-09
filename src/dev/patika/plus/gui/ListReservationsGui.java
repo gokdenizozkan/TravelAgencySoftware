@@ -45,6 +45,7 @@ public class ListReservationsGui extends JFrame {
                 "Beds", "Total Price", "Check In Date", "Check Out Date"};
         reservationsTableModel = new DefaultTableModel(headers, 0);
         reservationsJt.setModel(reservationsTableModel);
+        reservationsJt.setDefaultEditor(Object.class, null);
 
         // popup
         reservationsPopupMenu = new JPopupMenu();
