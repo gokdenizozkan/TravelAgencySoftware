@@ -47,7 +47,12 @@ public class RoomAneGui extends JFrame {
     private JLabel seasonJl;
     private JComboBox boardTypeJcb;
     private JLabel boardTypeJl;
+    private JPanel roomsJp;
+    private JScrollPane roomsJsp;
+    private JTable roomsJt;
+    private JLabel roomsJl;
     private DefaultTableModel pricingTableModel;
+    private DefaultTableModel roomsTableModel;
     private int hotelId;
 
     public RoomAneGui(int hotelId) {
@@ -95,6 +100,13 @@ public class RoomAneGui extends JFrame {
         Object[] headers = {"Age", "Price"};
         pricingTableModel = new DefaultTableModel(headers, 0);
         pricingJt.setModel(pricingTableModel);
+
+        // rooms Table
+        Object[] roomsHeaders = {"Type", "Beds", "Stock", "Size", "Facilities"};
+        roomsTableModel = new DefaultTableModel(roomsHeaders, 0);
+        roomsJt.setModel(roomsTableModel);
+        roomsJt.setDefaultEditor(Object.class, null);
+        loadRooms();
     }
 
     private void initSeasonActionListener(ArrayList<Season> seasons) {
@@ -151,6 +163,8 @@ public class RoomAneGui extends JFrame {
 
             PricingOperation.add(room.getId(), seasonId, boardTypeId, pricing.get("Adult"), pricing.get("Child"))
                     .handleResponse();
+
+            loadRooms();
         });
     }
 
@@ -158,6 +172,20 @@ public class RoomAneGui extends JFrame {
         pricingTableModel.setRowCount(0);
         for (String ageClassifier : PropertyOperation.retrieveAllNames("age_classifier")) {
             pricingTableModel.addRow(new Object[]{ageClassifier, 0});
+        }
+    }
+
+    private void loadRooms() {
+        roomsTableModel.setRowCount(0);
+        for (Room room : RoomOperation.retrieveAll(hotelId)) {
+            roomsTableModel.addRow(new Object[]{
+                    room.getOfType(),
+                    room.getBeds(),
+                    room.getStock(),
+                    room.getSize(),
+                    PropertyOperation.retrieveNames(
+                            room.getFacilitiesAsList())
+            });
         }
     }
 }
