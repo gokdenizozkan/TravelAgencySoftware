@@ -340,9 +340,3 @@ VALUES (38, 12, 22, 666, 333);
 
 INSERT INTO pricing (room_id, season_id, board_type_id, price_adult, price_child)
 VALUES (39, 13, 22, 666, 333);
-
-
-/*
-INSERT INTO hotel (name, province, state, address, email, phone_number, stars, facilities, board_types)
-VALUES ('ad', 'il', 'ilçe', 'adres', 'mail', 'telefon', 4, 'facility', 'board');
-*/
