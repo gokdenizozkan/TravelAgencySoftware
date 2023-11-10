@@ -45,6 +45,7 @@ public class SeasonAneGui extends JFrame {
     private DefaultTableModel seasonsTableModel;
     private int hotelId;
 
+    // değerlendirme formu 10
     public SeasonAneGui(int hotelId) {
         this.hotelId = hotelId;
 

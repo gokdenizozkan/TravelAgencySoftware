@@ -4,8 +4,9 @@ import javax.swing.*;
 
 public class Config {
     public static class Database {
+        // değerlendirme formu 6
         public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-        public static final String URL = "jdbc:mysql://localhost:3306/agency";
+        public static final String URL = "jdbc:mysql://localhost:3306/agency-test";
         public static final String USERNAME = "root";
         public static final String PASSWORD = "4565";
     }

@@ -22,6 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * If a room has an entry with a specific date on the room_availability table, it is not available if the amount is 0.
  */
 public class RoomAvailabilityOperation {
+    // değerlendirme formu 17
     public static Response add(Reservation reservation) {
         LocalDate startDate = LocalDate.parse(reservation.getStartDate());
         LocalDate endDate = LocalDate.parse(reservation.getEndDate());

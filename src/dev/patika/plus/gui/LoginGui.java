@@ -32,6 +32,7 @@ public class LoginGui extends JFrame {
     }
 
     private void initActions() {
+        // değerlendirme formu 8
         loginJb.addActionListener(e -> {
             String username = usernameJtf.getText();
             String password = new String(passwordJpf.getPassword());

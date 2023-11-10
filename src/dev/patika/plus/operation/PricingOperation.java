@@ -108,4 +108,24 @@ public class PricingOperation {
         if (error.get()) return null;
         else return price.get();
     }
+
+    public static boolean exists(int roomId, int boardTypeId) {
+        String query = "SELECT * FROM pricing WHERE room_id = ? AND board_type_id = ? LIMIT 1";
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        boolean exists = false;
+        try {
+            preparedStatement = Database.getConnection().prepareStatement(query);
+            preparedStatement.setInt(1, roomId);
+            preparedStatement.setInt(2, boardTypeId);
+            resultSet = preparedStatement.executeQuery();
+            exists = resultSet.next();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } finally {
+            Util.close(preparedStatement, resultSet);
+        }
+        return exists;
+    }
 }

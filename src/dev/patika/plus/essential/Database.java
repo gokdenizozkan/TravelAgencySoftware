@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+// değerlendirme formu 6
 public class Database {
     private static Connection connection;
 

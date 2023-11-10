@@ -51,6 +51,7 @@ public class HotelAneGui extends JFrame {
     private JLabel starsSliderLabelJl;
     private Hotel hotel;
 
+    // değerlendirme formu 9
     public HotelAneGui() {
         init();
         initFields();

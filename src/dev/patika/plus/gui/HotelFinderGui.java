@@ -90,7 +90,7 @@ public class HotelFinderGui extends JFrame {
         readyDatePicker(checkOutYearJcb, checkOutMonthJcb, checkOutDayJcb);
 
         // hotels table
-        Object[] headers = {"ID", "Name", "Province", "State", "Address", "Phone"};
+        Object[] headers = {"ID", "Name", "Province", "State", "Stars", "Address", "Phone"};
         hotelsTableModel = new DefaultTableModel(headers, 0);
         hotelsJt.setModel(hotelsTableModel);
         hotelsJt.setDefaultEditor(Object.class, null);
@@ -119,6 +119,7 @@ public class HotelFinderGui extends JFrame {
     }
 
     private void initActions() {
+        // değerlendirme formu 13 - değerlendirme formu 14
         findJb.addActionListener(e -> {
             // fill
             boolean filled = Util.isAllComponentsFilled(provinceJcb, stateJcb, checkInYearJcb, checkInMonthJcb,
@@ -162,6 +163,7 @@ public class HotelFinderGui extends JFrame {
                         hotel.getName(),
                         hotel.getProvince(),
                         hotel.getState(),
+                        hotel.getStars(),
                         hotel.getAddress(),
                         hotel.getPhoneNumber()
                 });

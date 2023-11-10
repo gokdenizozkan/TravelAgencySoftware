@@ -30,7 +30,7 @@ public class ReservationSummaryGui extends JFrame {
     private Hotel hotel;
     private String html;
 
-
+    // değerlendirme formu 16
     public ReservationSummaryGui(Reservation reservation) {
         this.reservation = reservation;
         this.room = RoomOperation.retrieve(reservation.getRoomId());
@@ -45,7 +45,7 @@ public class ReservationSummaryGui extends JFrame {
     private void init() {
         add(wrapper);
         setTitle("Reservation Panel - " + Config.Gui.TITLE);
-        setSize(800, 800);
+        setSize(800, 900);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -57,6 +57,7 @@ public class ReservationSummaryGui extends JFrame {
                 .addHeading("Hotel", 2)
                 .startParagraph()
                 .add("Name: " + hotel.getName()).newline()
+                .add("Stars: " + hotel.getStars()).newline()
                 .add("Address: " + hotel.getAddress()).newline()
                 .add("Phone Number: " + hotel.getPhoneNumber()).newline()
                 .add("Email: " + hotel.getEmail()).newline()

@@ -61,7 +61,7 @@ public class AneGui extends JFrame {
 
         hotelsJpm.add(addJmi);
         hotelsJpm.add(editJmi);
-        hotelsJpm.add(deleteJmi);
+        //hotelsJpm.add(deleteJmi); TODO
         hotelsJpm.add(reloadTableJmi);
         hotelsJt.setComponentPopupMenu(hotelsJpm);
 
@@ -108,13 +108,13 @@ public class AneGui extends JFrame {
             int id = (int) hotelsJt.getValueAt(selectedRow, 0);
             new HotelAneGui(id);
         });
-        deleteJmi.addActionListener(e -> {
+        /*deleteJmi.addActionListener(e -> {
             int selectedRow = hotelsJt.getSelectedRow();
             if (selectedRow == -1) return;
             int id = (int) hotelsJt.getValueAt(selectedRow, 0);
             HotelOperation.delete(id)
                     .handleResponse();
-        });
+        });*/
         reloadTableJmi.addActionListener(e -> loadHotels());
     }
 

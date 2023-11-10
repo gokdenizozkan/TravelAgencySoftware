@@ -50,6 +50,7 @@ public class RoomSelectorGui extends JFrame {
             .toString();
 
 
+    // değerlendirme formu 14
     public RoomSelectorGui(Reservation reservation) {
         this.reservation = reservation;
         this.hotelId = reservation.getHotelId();
@@ -141,6 +142,7 @@ public class RoomSelectorGui extends JFrame {
                         PropertyOperation.retrieveNames(room.getFacilitiesAsList())
                 ));
 
+                // değerlendirme formu 15
                 // pricing
                 reservation.setRoomId(roomId);
                 int price = PricingOperation.calculatePrice(reservation);

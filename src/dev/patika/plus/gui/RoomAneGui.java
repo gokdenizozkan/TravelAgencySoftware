@@ -55,6 +55,7 @@ public class RoomAneGui extends JFrame {
     private DefaultTableModel roomsTableModel;
     private int hotelId;
 
+    // değerlendirme formu 11
     public RoomAneGui(int hotelId) {
         this.hotelId = hotelId;
 
@@ -146,6 +147,7 @@ public class RoomAneGui extends JFrame {
             RoomOperation.add(room)
                     .handleResponse();
 
+            // değerlendirme formu 12
             // pricing add
             HashMap<String, Integer> pricing = new HashMap<>();
             for (int i = 0; i < pricingTableModel.getRowCount(); i++) {

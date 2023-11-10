@@ -22,6 +22,7 @@ public class ListReservationsGui extends JFrame {
     private JPopupMenu reservationsPopupMenu;
     private JMenuItem reservationsDeleteMenuItem;
 
+    // değerlendirme formu 18
     public ListReservationsGui() {
         init();
         initFields();
