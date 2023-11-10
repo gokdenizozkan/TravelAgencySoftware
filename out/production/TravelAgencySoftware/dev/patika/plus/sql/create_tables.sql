@@ -13,23 +13,38 @@ create table hotel
     board_types  varchar(255) null
 );
 
+create table pricing
+(
+    room_id       int null,
+    season_id     int null,
+    board_type_id int null,
+    price_adult   int null,
+    price_child   int null
+);
+
 create table property
 (
     id      int auto_increment
         primary key,
-    name    varchar(255)                                           null,
-    of_type enum ('hotel_facility', 'room_facility', 'board_type') null
+    name    varchar(255)                                                                          null,
+    of_type enum ('hotel_facility', 'room_facility', 'board_type', 'room_type', 'age_classifier') null
 );
 
-create table season
+create table reservation
 (
-    id       int auto_increment
+    id                   int auto_increment
         primary key,
-    hotel_id int          not null,
-    start    varchar(255) null,
-    end      varchar(255) null,
-    constraint season_hotel_id_fk
-        foreign key (hotel_id) references hotel (id)
+    hotel_id             int          not null,
+    room_id              int          not null,
+    board_type_id        int          not null,
+    start_date           varchar(255) not null,
+    end_date             varchar(255) not null,
+    adult_guest_count    int          not null,
+    child_guest_count    int          not null,
+    total_price          int          not null,
+    contact_name         varchar(255) not null,
+    contact_phone_number varchar(255) not null,
+    contact_email        varchar(255) not null
 );
 
 create table room
@@ -41,13 +56,38 @@ create table room
     beds       int          null,
     stock      int          null,
     size       int          null,
-    facilities varchar(255) null,
-    season_id  int          null,
-    price      int          null,
-    constraint room_hotel_id_fk
-        foreign key (hotel_id) references hotel (id),
-    constraint room_season_id_fk
-        foreign key (season_id) references season (id)
+    facilities varchar(255) null
 );
 
+create index room_hotel_id_fk
+    on room (hotel_id);
+
+create table room_availability
+(
+    room_id int          not null,
+    amount  int          null,
+    date    varchar(255) null
+);
+
+create table season
+(
+    id       int auto_increment
+        primary key,
+    hotel_id int          not null,
+    start    varchar(255) null,
+    end      varchar(255) null,
+    name     varchar(255) null
+);
+
+create index season_hotel_id_fk
+    on season (hotel_id);
+
+create table user
+(
+    id       int auto_increment
+        primary key,
+    username varchar(255)               not null,
+    password varchar(255)               not null,
+    of_type  enum ('admin', 'employee') null
+);
 
